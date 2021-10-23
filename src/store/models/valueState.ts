@@ -99,9 +99,10 @@ export const valueState = createModel<RootModel>()({
     },
   },
   effects: (dispatch) => ({
-    async startNewSkimThroughRead(payload, rootState) {},
     async loadItemDefinitions(payload, rootState) {
-      dispatch.valueState.updateItemDefinitions({});
+      const currentScenario = rootState.uiState.currentScenario;
+      const newItemDefinitions = await fetch(`/public/data/${currentScenario}/items.json`).then(async (response) => await response.json());
+      dispatch.valueState.updateItemDefinitions(newItemDefinitions);
     },
     /**
      * 检测玩家物品栏，看看是不是有影响数值计算的物品在，返回计算得到的真实数值
