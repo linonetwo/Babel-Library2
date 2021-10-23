@@ -6,15 +6,28 @@ import Article from './article';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
+
+const Content = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   width: 100%;
 `;
 
 export default () => {
   return (
-    <Container className="">
+    <Container>
       <Panel />
-      <Article />
+      <Content>
+        <Article />
+      </Content>
     </Container>
   );
 };
