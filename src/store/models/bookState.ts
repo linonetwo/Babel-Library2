@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { random, sample } from 'lodash';
 import { cddaJSONWithNameAndDescription, ICDDAJSONWithNameAndDescription } from 'cdda-chinese-text-dataset';
+import { IConfiguration, templateFileToNLCSTNodes, getConfigSchemaFromTemplate, IOutputWIthMetadata, randomOutlineToArrayWithMetadataCompiler } from 'tbg'
 import { createModel } from '@rematch/core';
 import type { RootModel } from './index';
 
@@ -47,10 +48,15 @@ export const bookState = createModel<RootModel>()({
   effects: (dispatch) => ({
     async startNewSkimThroughRead(payload, rootState) {
       dispatch.bookState.clearSkimThroughReadingContent();
-      for (let counter = 0; counter < random(rootState.bookState.skimThroughReadCountRange); counter += 1) {
+      const [min, max] = rootState.bookState.skimThroughReadCountRange;
+      for (let counter = 0; counter < random(min, max); counter += 1) {
         const randomBook = sample(cddaJSONWithNameAndDescription);
-        dispatch.bookState.appendSkimThroughReadingContent(randomBook);
-        await new Promise((resolve) => setTimeout(resolve, rootState.bookState.skimThroughReadInterval));
+        if (randomBook !== undefined) {
+          dispatch.bookState.appendSkimThroughReadingContent(randomBook);
+          await new Promise((resolve) => setTimeout(resolve, rootState.bookState.skimThroughReadInterval));
+        } else {
+          console.error(`没有抽取到合适的书籍，可能 CDDA cddaJSONWithNameAndDescription 数据集有问题`);
+        }
       }
     },
     async startNewDetailedRead(payload, rootState) {
