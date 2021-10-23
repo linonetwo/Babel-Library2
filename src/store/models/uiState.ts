@@ -3,11 +3,11 @@ import { createModel } from '@rematch/core';
 import type { RootModel } from './index';
 
 interface IUIState {
+  currentBookComment: string;
   /**
    * 当前在玩的背景故事
    */
   currentScenario: string;
-  currentBookComment: string;
   endingText: string[];
   guideText: string[];
   scenarios: Array<{ description: string; id: string; name: string }>;
@@ -48,7 +48,7 @@ export const uiState = createModel<RootModel>()({
   effects: (dispatch) => ({
     async loadGuideText(payload, rootState) {
       const currentScenario = rootState.uiState.currentScenario;
-      const newGuideTextContent = await fetch(`/public/data/${currentScenario}/guide.md`).then(async (response) => await response.text());
+      const newGuideTextContent = await fetch(`data/${currentScenario}/guide.md`).then(async (response) => await response.text());
       dispatch.uiState.guideTextSetter(newGuideTextContent.split('\n'));
     },
   }),

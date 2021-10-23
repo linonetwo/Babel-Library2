@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { RootState, Dispatch } from 'src/store/store';
 import styled from 'styled-components';
 import Guider from './assets/guide-man.png';
 
@@ -36,21 +39,21 @@ const MessageBox = styled.div<MessageBoxProps>`
 `;
 
 export function Guide(): JSX.Element {
+  const guideText = useSelector((state: RootState) => state.uiState.guideText);
+  const dispatch = useDispatch<Dispatch>();
+  useEffect(() => {
+    dispatch.uiState.loadGuideText({});
+  }, []);
   return (
     <Container className="nes-container">
       <section className="message-list">
-        <section className="message -left">
-          <div className="nes-balloon from-left">
-            <p>// 玩法介绍</p>
-          </div>
-        </section>
-
-        <section className="message -right">
-          <div className="nes-balloon from-right">
-            <p>// 讲一下游戏故事背景，关键信息等，游戏达成条件等</p>
-            <p>点击引导者头像进入探索进程。</p>
-          </div>
-        </section>
+        {guideText.map((text, index) => (
+          <section className={`message ${index % 2 === 0 ? '-left' : '-right'}`}>
+            <div className={`nes-balloon from${index % 2 === 0 ? '-left' : '-right'}`}>
+              <p>{text}</p>
+            </div>
+          </section>
+        ))}
       </section>
       <Link to="/main">
         <GuiderImage src={Guider} />
