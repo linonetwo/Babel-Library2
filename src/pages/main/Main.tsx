@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../../components/Button';
+import Panel from './panel';
+import Chat from './chat';
+import StuffBar from './stuff';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100%;
   width: 100%;
 `;
@@ -13,7 +14,9 @@ const Container = styled.div`
 function Main() {
   return (
     <Container className="">
-      <Button />
+      <Panel />
+      <Chat />
+      <StuffBar />
     </Container>
   );
 }
