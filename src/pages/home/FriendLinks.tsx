@@ -17,6 +17,7 @@ const Container = styled.div`
 `;
 const FriendLinkRow = styled.span`
   display: flex;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
