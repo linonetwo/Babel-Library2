@@ -43,6 +43,7 @@ export function Guide(): JSX.Element {
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
     dispatch.uiState.loadGuideText({});
+    dispatch.valueState.loadItemDefinitions({});
   }, []);
   return (
     <Container className="nes-container">
