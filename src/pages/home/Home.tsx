@@ -14,7 +14,7 @@ const Container = styled.div`
 
 export function Home(): JSX.Element {
   return (
-    <Container className="">
+    <Container>
       <Button />
       <FriendLinks />
     </Container>

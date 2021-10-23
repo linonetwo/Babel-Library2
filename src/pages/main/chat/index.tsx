@@ -32,7 +32,7 @@ const Avatar = styled.img`
   flex-shrink: 0;
 `;
 
-export default () => {
+export function SkimThroughReadChat(): JSX.Element {
   return (
     <SectionList className="message-list">
       <Message className="message -left">
@@ -53,4 +53,4 @@ export default () => {
       </Message>
     </SectionList>
   );
-};
+}

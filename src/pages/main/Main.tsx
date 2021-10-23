@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Panel from './panel';
-import Chat from './chat';
+import { SkimThroughReadChat } from './chat';
 import StuffBar from './stuff';
 
 const Container = styled.div`
@@ -13,9 +13,9 @@ const Container = styled.div`
 
 export function Main(): JSX.Element {
   return (
-    <Container className="">
+    <Container>
       <Panel />
-      <Chat />
+      <SkimThroughReadChat />
       <StuffBar />
     </Container>
   );
