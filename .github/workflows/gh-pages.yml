@@ -15,9 +15,9 @@ jobs:
           node-version: '16'
 
       - name: Install Dependency
-        run: npm install
+        run: yarn install
       - name: Build
-        run: npm run build
+        run: yarn build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
