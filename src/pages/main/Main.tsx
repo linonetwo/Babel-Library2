@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Panel from '../../components/panel';
-import Chat from './chat';
+import { SkimThroughReadChat } from './chat';
 import StuffBar from './stuff';
 
 const Container = styled.div`
@@ -11,14 +11,12 @@ const Container = styled.div`
   width: 100%;
 `;
 
-function Main() {
+export function Main(): JSX.Element {
   return (
-    <Container className="">
+    <Container>
       <Panel />
-      <Chat />
+      <SkimThroughReadChat />
       <StuffBar />
     </Container>
   );
 }
-
-export default Main;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Guider from './assets/guide-man.png';
 
@@ -35,25 +35,26 @@ const MessageBox = styled.div<MessageBoxProps>`
   justify-content: ${(props) => (props.left ? 'flex-start' : 'flex-end')};
 `;
 
-function Guide() {
+export function Guide(): JSX.Element {
   return (
     <Container className="nes-container">
       <section className="message-list">
         <section className="message -left">
           <div className="nes-balloon from-left">
-            <p>玩法介绍</p>
+            <p>// 玩法介绍</p>
           </div>
         </section>
 
         <section className="message -right">
           <div className="nes-balloon from-right">
-            <p>讲一下游戏故事背景，关键信息等，游戏达成条件等</p>
+            <p>// 讲一下游戏故事背景，关键信息等，游戏达成条件等</p>
+            <p>点击引导者头像进入探索进程。</p>
           </div>
         </section>
       </section>
-      <GuiderImage src={Guider} />
+      <Link to="/main">
+        <GuiderImage src={Guider} />
+      </Link>
     </Container>
   );
 }
-
-export default Guide;
