@@ -1,9 +1,13 @@
 /* eslint-disable typescript-sort-keys/interface */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { cloneDeep } from 'lodash';
 import { createModel } from '@rematch/core';
+import type { IBookTextUpdateGameScoreMetadata } from './bookState';
 import type { RootModel } from './index';
 
-export enum ItemEffect {}
+export enum ItemEffect {
+  增加,
+}
 export interface IItem {
   /**
    * 其实也是 name，索引和展示用
@@ -34,6 +38,10 @@ interface IValueState {
    */
   inventory: string[];
   /**
+   * 当前局激活的物品 ID 列表
+   */
+  activatedInventory: string[];
+  /**
    * 加载的策划填的物品定义表
    */
   itemDefinitions: IItemDefinition;
@@ -46,6 +54,7 @@ export const valueState = createModel<RootModel>()({
   state: {
     scores: {},
     inventory: [],
+    activatedInventory: [],
     itemDefinitions: {},
   } as IValueState,
   reducers: {
@@ -75,6 +84,15 @@ export const valueState = createModel<RootModel>()({
       state.inventory = [];
       return state;
     },
+    /**
+     * 设置哪些物品是启用了的。此方法也可以用于清空启用的物品列表。
+     * @param newActivatedInventory 物品 ID 列表，或空列表
+     * @returns
+     */
+    setActivatedInventory(state, newActivatedInventory: string[]) {
+      state.activatedInventory = newActivatedInventory;
+      return state;
+    },
     updateItemDefinitions(state, newItemDefinitions: IItemDefinition) {
       state.itemDefinitions = newItemDefinitions;
       return state;
@@ -84,6 +102,28 @@ export const valueState = createModel<RootModel>()({
     async startNewSkimThroughRead(payload, rootState) {},
     async loadItemDefinitions(payload, rootState) {
       dispatch.valueState.updateItemDefinitions({});
+    },
+    /**
+     * 检测玩家物品栏，看看是不是有影响数值计算的物品在，返回计算得到的真实数值
+     * @param payload 本次参与计算的数值和类型
+     */
+    checkItemAffectValues(payload: IBookTextUpdateGameScoreMetadata, rootState) {
+      const realValue = cloneDeep(payload);
+      rootState.valueState.activatedInventory.forEach((item) => {
+        const itemDefinition = rootState.valueState.itemDefinitions[item];
+        if (itemDefinition !== undefined) {
+          switch (itemDefinition.effect) {
+            case ItemEffect.增加:
+              realValue.scoreDiff += itemDefinition.value;
+              break;
+
+            default:
+              break;
+          }
+        }
+      });
+
+      return realValue;
     },
   }),
 });

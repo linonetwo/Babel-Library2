@@ -117,13 +117,33 @@ export const bookState = createModel<RootModel>()({
         const result: Array<IOutputWIthMetadata<unknown[]>> = randomOutlineToArrayWithMetadataCompiler(templateData, configFormData);
         // 为文本带上随机的数值内容
         const scoreIDs = Object.keys(rootState.valueState.scores);
-        const randomScoreID = sample(scoreIDs);
-        const haveScore = rootState.bookState.detailedReadWithScoreFrequency > random(0, 1, true);
-        const haveItem = rootState.bookState.detailedReadWithItemFrequency > random(0, 1, true);
-        const resultWithRandomMetadata: Array<IOutputWIthMetadata<IBookTextMetadata[]>> = result.map((aResult) => ({
-          ...aResult,
-          metadata: [] as IBookTextMetadata[],
-        }));
+        const itemIDs = Object.keys(rootState.valueState.itemDefinitions);
+        const resultWithRandomMetadata: Array<IOutputWIthMetadata<IBookTextMetadata[]>> = result.map((aResult) => {
+          // 每行文本都随机抽取一下
+          const randomScoreID = sample(scoreIDs);
+          const randomItemID = sample(itemIDs);
+          const haveScore = rootState.bookState.detailedReadWithScoreFrequency > random(0, 1, true);
+          const haveItem = rootState.bookState.detailedReadWithItemFrequency > random(0, 1, true);
+          let metadataItem: IBookTextMetadata | undefined;
+          if (haveScore && randomScoreID !== undefined) {
+            const randomScoreValue = random(0, 3);
+            metadataItem = {
+              ...metadataItem,
+              score: randomScoreID,
+              scoreDiff: randomScoreValue,
+            };
+          }
+          if (haveItem && randomItemID !== undefined) {
+            metadataItem = {
+              ...metadataItem,
+              item: randomItemID,
+            };
+          }
+          return {
+            ...aResult,
+            metadata: metadataItem !== undefined ? [metadataItem] : undefined,
+          };
+        });
         dispatch.bookState.updateDetailedReadingContent(resultWithRandomMetadata);
       } catch (error) {
         newErrorMessage += (error as Error).message;
