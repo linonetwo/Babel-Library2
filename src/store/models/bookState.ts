@@ -4,6 +4,7 @@ import { random, sample } from 'lodash';
 import { cddaJSONWithNameAndDescription, ICDDAJSONWithNameAndDescription } from 'cdda-chinese-text-dataset';
 import { IConfiguration, templateFileToNLCSTNodes, getConfigSchemaFromTemplate, IOutputWIthMetadata, randomOutlineToArrayWithMetadataCompiler } from 'tbg';
 import { createModel } from '@rematch/core';
+import { VFile } from 'vfile';
 import type { RootModel } from './index';
 
 interface IBookState {
@@ -13,7 +14,8 @@ interface IBookState {
   skimThroughReadInterval: number;
   currentSkimThroughReadContent: ICDDAJSONWithNameAndDescription[];
   currentDetailedReadTemplate: string | undefined;
-  currentDetailedReadContent: string[];
+  currentDetailedReadContent: Array<IOutputWIthMetadata<string[]>>;
+  detailedTemplateMenu: string[];
 }
 
 /**
@@ -26,8 +28,13 @@ export const bookState = createModel<RootModel>()({
     currentSkimThroughReadContent: [],
     currentDetailedReadTemplate: undefined,
     currentDetailedReadContent: [],
+    detailedTemplateMenu: [],
   } as IBookState,
   reducers: {
+    updateDetailedTemplateMenu(state, newMenu: string[]) {
+      state.detailedTemplateMenu = newMenu;
+      return state;
+    },
     clearSkimThroughReadingContent(state) {
       state.currentSkimThroughReadContent = [];
       return state;
@@ -40,8 +47,8 @@ export const bookState = createModel<RootModel>()({
       state.currentDetailedReadContent = [];
       return state;
     },
-    appendDetailedReadingContent(state, newDetailedReadingContent: string) {
-      state.currentDetailedReadContent.push(newDetailedReadingContent);
+    updateDetailedReadingContent(state, newDetailedReadingContent: Array<IOutputWIthMetadata<string[]>>) {
+      state.currentDetailedReadContent = newDetailedReadingContent;
       return state;
     },
   },
@@ -60,8 +67,37 @@ export const bookState = createModel<RootModel>()({
       }
     },
     async startNewDetailedRead(payload, rootState) {
-      const newDetailedTemplate = await fetch('/public/templates/')
       dispatch.bookState.clearDetailedReadingContent();
+      // 获取能用的模板
+      let detailedTemplateMenu = rootState.bookState.detailedTemplateMenu;
+      if (detailedTemplateMenu === undefined || detailedTemplateMenu.length === 0) {
+        const detailedTemplateMenuContent = await fetch('/public/templates/menu.txt').then(async (response) => await response.text());
+        detailedTemplateMenu = detailedTemplateMenuContent.split('\n');
+        dispatch.bookState.updateDetailedTemplateMenu(detailedTemplateMenu);
+      }
+      const newDetailedTemplateName = sample(detailedTemplateMenu);
+      if (newDetailedTemplateName === undefined || newDetailedTemplateName.length === 0) {
+        console.error(`没有抽取到合适的模板，可能 /public/templates/menu.txt 有问题`);
+        return;
+      }
+      const newDetailedTemplateContent = await fetch(`/public/templates/${newDetailedTemplateName}`).then(async (response) => await response.text());
+      const vFile = new VFile({ path: newDetailedTemplateName, value: newDetailedTemplateContent });
+      // 开始自动生成
+      let newErrorMessage = '';
+      try {
+        const templateData = templateFileToNLCSTNodes(vFile);
+        // TODO: 暂时没用上模板槽位
+        const configFormData = {};
+        if (configFormData === undefined) {
+          throw new Error('模板参数不正确');
+        }
+        const result: Array<IOutputWIthMetadata<string[]>> = randomOutlineToArrayWithMetadataCompiler(templateData, configFormData);
+        dispatch.bookState.updateDetailedReadingContent(result);
+      } catch (error) {
+        newErrorMessage += (error as Error).message;
+      }
+      // newErrorMessage += reporter(vFile);
+      console.warn('自动生成结束', newErrorMessage);
     },
   }),
 });

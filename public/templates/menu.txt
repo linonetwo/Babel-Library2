@@ -1,4 +1,5 @@
 YYDS生成器.md
+menu.txt
 克苏鲁生成器.md
 动物世界生成器.md
 舌尖上的中国生成器.md
