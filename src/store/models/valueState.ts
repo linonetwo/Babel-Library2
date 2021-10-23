@@ -11,7 +11,13 @@ export enum ItemEffect {
   反转,
 }
 export interface IItemEffect {
+  /**
+   * 仅转移时有用，作为转移的源头
+   */
   effectFrom?: string;
+  /**
+   * 转移的时候作为转移的目的地；其余时候作为效果的目标
+   */
   effectTo?: string;
   /**
    * 物品效果，描述了 value 字段的解释方法
