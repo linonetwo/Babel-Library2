@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { random, sample } from 'lodash';
 import { cddaJSONWithNameAndDescription, ICDDAJSONWithNameAndDescription } from 'cdda-chinese-text-dataset';
-import { IConfiguration, templateFileToNLCSTNodes, getConfigSchemaFromTemplate, IOutputWIthMetadata, randomOutlineToArrayWithMetadataCompiler } from 'tbg'
+import { IConfiguration, templateFileToNLCSTNodes, getConfigSchemaFromTemplate, IOutputWIthMetadata, randomOutlineToArrayWithMetadataCompiler } from 'tbg';
 import { createModel } from '@rematch/core';
 import type { RootModel } from './index';
 
@@ -60,6 +60,7 @@ export const bookState = createModel<RootModel>()({
       }
     },
     async startNewDetailedRead(payload, rootState) {
+      const newDetailedTemplate = await fetch('/public/templates/')
       dispatch.bookState.clearDetailedReadingContent();
     },
   }),
