@@ -33,6 +33,18 @@ interface IBookState {
   detailedReadWithScoreFrequency: number;
   /** 精读时的新物品出率 */
   detailedReadWithItemFrequency: number;
+  /**
+   * 配置游戏里要精读几轮，一个范围用于随机选取
+   */
+  detailedReadRoundConfig: [number, number];
+  /**
+   * 当局游戏里随机出的需要精读几轮
+   */
+  detailedReadRound: number;
+  /**
+   * 当前已经读了几轮了
+   */
+  currentDetailedReadRound: number;
   currentSkimThroughReadContent: ICDDAJSONWithNameAndDescription[];
   currentDetailedReadTemplate: string | undefined;
   currentDetailedReadContent: Array<IOutputWIthMetadata<IBookTextMetadata[]>>;
@@ -59,6 +71,9 @@ export const bookState = createModel<RootModel>()({
     skimThroughReadInterval: 4000,
     detailedReadWithScoreFrequency: 0.4,
     detailedReadWithItemFrequency: 0.2,
+    detailedReadRoundConfig: [2, 5],
+    detailedReadRound: 3,
+    currentDetailedReadRound: 0,
     currentSkimThroughReadContent: [],
     currentDetailedReadTemplate: undefined,
     currentDetailedReadContent: [],
@@ -72,6 +87,24 @@ export const bookState = createModel<RootModel>()({
      */
     updateDetailedTemplateMenu(state, newMenu: string[]) {
       state.detailedTemplateMenu = newMenu;
+      return state;
+    },
+    /**
+     * 刷新当局游戏里随机出的需要精读几轮
+     * 顺便初始化当局游戏里已经读了几轮了
+     */
+    updateDetailedReadRound(state) {
+      const [min, max] = state.detailedReadRoundConfig;
+      state.detailedReadRound = random(min, max);
+      state.currentDetailedReadRound = 0;
+      return state;
+    },
+    /**
+     * 刷新当局游戏里已经读了几轮了
+     * 传 0 即为初始化
+     */
+    updateCurrentDetailedReadRound(state, currentDetailedReadRound: number) {
+      state.currentDetailedReadRound = currentDetailedReadRound;
       return state;
     },
     /**
