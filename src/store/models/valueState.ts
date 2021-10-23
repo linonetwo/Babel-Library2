@@ -46,6 +46,26 @@ export interface IItem {
    */
   effects: IItemEffect[];
 }
+export interface IEnding {
+  /**
+   * 其实也是 id，索引和展示用
+   */
+  name: string;
+  /**
+   * 展示给用户的结局文案
+   */
+  description: string;
+  /**
+   * ```json
+   * "condition": {
+      "资源": "5",
+      "威胁": "5",
+      "道德": "5"
+    }
+    ```
+   */
+  condition: Record<string, number>;
+}
 export type IItemDefinition = Record<string, IItem | undefined>;
 interface IValueState {
   /**
@@ -65,6 +85,14 @@ interface IValueState {
    * 加载的策划填的物品定义表
    */
   itemDefinitions: IItemDefinition;
+  /**
+   * 结局的定义
+   */
+  endingDefinitions: IEnding[];
+  /**
+   * 当前的结局，需要通过调用 selectGameEnding 来更新
+   */
+  currentEnding: IEnding | undefined;
 }
 
 /**
@@ -76,6 +104,8 @@ export const valueState = createModel<RootModel>()({
     inventory: [],
     activatedInventory: [],
     itemDefinitions: {},
+    endingDefinitions: [],
+    currentEnding: undefined,
   } as IValueState,
   reducers: {
     /**
@@ -83,8 +113,8 @@ export const valueState = createModel<RootModel>()({
      * @param type keyof typeof scores，例如 `"威胁"`
      * @param newValue 新的值，将直接设进去。需要在 react 侧在旧值上累加后设过来
      */
-    updateScore(state, type: string, newValue: number) {
-      state.scores[type] = newValue;
+    updateScore(state, score: string, newValue: number) {
+      state.scores[score] = newValue;
       return state;
     },
     clearScore(state) {
@@ -117,6 +147,14 @@ export const valueState = createModel<RootModel>()({
       state.itemDefinitions = newItemDefinitions;
       return state;
     },
+    updateEndingDefinitions(state, newEndingDefinitions: IEnding[]) {
+      state.endingDefinitions = newEndingDefinitions;
+      return state;
+    },
+    updateCurrentEnding(state, newCurrentEnding: IEnding) {
+      state.currentEnding = newCurrentEnding;
+      return state;
+    },
   },
   effects: (dispatch) => ({
     async loadItemDefinitions(payload, rootState) {
@@ -129,6 +167,11 @@ export const valueState = createModel<RootModel>()({
         newItemDefinitions[item.id] = item;
       });
       dispatch.valueState.updateItemDefinitions(newItemDefinitions);
+    },
+    async loadEndingDefinitions(payload, rootState) {
+      const currentScenario = rootState.uiState.currentScenario;
+      const newEndingList = await fetch(`/public/data/${currentScenario}/ending.json`).then(async (response) => await (response.json() as Promise<IEnding[]>));
+      dispatch.valueState.updateEndingDefinitions(newEndingList);
     },
     /**
      * 检测玩家物品栏，看看是不是有影响数值计算的物品在，返回计算得到的真实数值
@@ -168,6 +211,25 @@ export const valueState = createModel<RootModel>()({
       });
 
       return realValue;
+    },
+    selectGameEnding(payload: IBookTextUpdateGameScoreMetadata, rootState) {
+      let currentEnding: IEnding | undefined;
+      rootState.valueState.endingDefinitions.forEach((ending) => {
+        const scoreKeys = Object.keys(ending.condition);
+        if (scoreKeys.every((key) => (rootState.valueState.scores[key] ?? 0) > ending.condition[key])) {
+          currentEnding = ending;
+        }
+      });
+      if (currentEnding !== undefined) {
+        dispatch.valueState.updateCurrentEnding(currentEnding);
+      } else {
+        console.error('没有找到合适的结局', rootState.valueState.scores, rootState.valueState.endingDefinitions);
+        dispatch.valueState.updateCurrentEnding({
+          name: '奇怪的结局',
+          description: '奇怪的是，在你下定决心的那一瞬间，图书馆层层剥落并崩塌了，仿佛这个世界的基石出了bug。',
+          condition: {},
+        });
+      }
     },
   }),
 });
