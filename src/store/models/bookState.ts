@@ -7,16 +7,35 @@ import { createModel } from '@rematch/core';
 import { VFile } from 'vfile';
 import type { RootModel } from './index';
 
-const parsedCddaJSONWithNameAndDescription = JSON.parse(cddaJSONWithNameAndDescription) as ICDDAJSONWithNameAndDescription[]
+const parsedCddaJSONWithNameAndDescription = JSON.parse(cddaJSONWithNameAndDescription) as ICDDAJSONWithNameAndDescription[];
+
+export interface IBookTextUpdateGameScoreMetadata {
+  /** 对哪个计分板进行加减分 */
+  score: string;
+  /** 正负值，正值为加分，反正直接加到现有分上就行 */
+  scoreDiff: number;
+}
+export interface IBookTextNewItemMetadata {
+  /** 新获得的物品 ID */
+  item: string;
+}
+/**
+ * 通过阅读书的某一行获得的新东西，可能是计分，也可能是物品/认知
+ */
+export type IBookTextMetadata = IBookTextUpdateGameScoreMetadata | IBookTextNewItemMetadata | (IBookTextUpdateGameScoreMetadata & IBookTextNewItemMetadata);
 
 interface IBookState {
   /** 要略读几本书才进入精读，一个范围用于随机选取 */
   skimThroughReadCountRange: [number, number];
   /** 略读的新书添加间隔 ms 时间 */
   skimThroughReadInterval: number;
+  /** 精读时的计分板内容出率 */
+  detailedReadWithScoreFrequency: number;
+  /** 精读时的新物品出率 */
+  detailedReadWithItemFrequency: number;
   currentSkimThroughReadContent: ICDDAJSONWithNameAndDescription[];
   currentDetailedReadTemplate: string | undefined;
-  currentDetailedReadContent: Array<IOutputWIthMetadata<string[]>>;
+  currentDetailedReadContent: Array<IOutputWIthMetadata<IBookTextMetadata[]>>;
   detailedTemplateMenu: string[];
 }
 
@@ -27,6 +46,8 @@ export const bookState = createModel<RootModel>()({
   state: {
     skimThroughReadCountRange: [10, 20],
     skimThroughReadInterval: 4000,
+    detailedReadWithScoreFrequency: 0.4,
+    detailedReadWithItemFrequency: 0.2,
     currentSkimThroughReadContent: [],
     currentDetailedReadTemplate: undefined,
     currentDetailedReadContent: [],
@@ -49,7 +70,7 @@ export const bookState = createModel<RootModel>()({
       state.currentDetailedReadContent = [];
       return state;
     },
-    updateDetailedReadingContent(state, newDetailedReadingContent: Array<IOutputWIthMetadata<string[]>>) {
+    updateDetailedReadingContent(state, newDetailedReadingContent: Array<IOutputWIthMetadata<IBookTextMetadata[]>>) {
       state.currentDetailedReadContent = newDetailedReadingContent;
       return state;
     },
@@ -93,8 +114,17 @@ export const bookState = createModel<RootModel>()({
         if (configFormData === undefined) {
           throw new Error('模板参数不正确');
         }
-        const result: Array<IOutputWIthMetadata<string[]>> = randomOutlineToArrayWithMetadataCompiler(templateData, configFormData);
-        dispatch.bookState.updateDetailedReadingContent(result);
+        const result: Array<IOutputWIthMetadata<unknown[]>> = randomOutlineToArrayWithMetadataCompiler(templateData, configFormData);
+        // 为文本带上随机的数值内容
+        const scoreIDs = Object.keys(rootState.valueState.scores);
+        const randomScoreID = sample(scoreIDs);
+        const haveScore = rootState.bookState.detailedReadWithScoreFrequency > random(0, 1, true);
+        const haveItem = rootState.bookState.detailedReadWithItemFrequency > random(0, 1, true);
+        const resultWithRandomMetadata: Array<IOutputWIthMetadata<IBookTextMetadata[]>> = result.map((aResult) => ({
+          ...aResult,
+          metadata: [] as IBookTextMetadata[],
+        }));
+        dispatch.bookState.updateDetailedReadingContent(resultWithRandomMetadata);
       } catch (error) {
         newErrorMessage += (error as Error).message;
       }
