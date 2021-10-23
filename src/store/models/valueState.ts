@@ -7,6 +7,20 @@ import type { RootModel } from './index';
 
 export enum ItemEffect {
   增加,
+  转移,
+  反转,
+}
+export interface IItemEffect {
+  effectFrom?: string;
+  effectTo?: string;
+  /**
+   * 物品效果，描述了 value 字段的解释方法
+   */
+  effect: ItemEffect;
+  /**
+   * 一个数值，涵义根据 effect 不同而不同
+   */
+  value: number;
 }
 export interface IItem {
   /**
@@ -18,13 +32,13 @@ export interface IItem {
    */
   description: string;
   /**
-   * 物品效果，描述了 value 字段的解释方法
+   * 对物品的吐槽描述
    */
-  effect: ItemEffect;
+  comment: string;
   /**
-   * 一个数值，涵义根据 effect 不同而不同
+   * 物品的效果计算数值等
    */
-  value: number;
+  effects: IItemEffect[];
 }
 export type IItemDefinition = Record<string, IItem | undefined>;
 interface IValueState {
@@ -101,7 +115,13 @@ export const valueState = createModel<RootModel>()({
   effects: (dispatch) => ({
     async loadItemDefinitions(payload, rootState) {
       const currentScenario = rootState.uiState.currentScenario;
-      const newItemDefinitions = await fetch(`/public/data/${currentScenario}/items.json`).then(async (response) => await response.json());
+      const newItemDefinitionsList = await fetch(`/public/data/${currentScenario}/items.json`).then(
+        async (response) => await (response.json() as Promise<IItem[]>),
+      );
+      const newItemDefinitions: IItemDefinition = {};
+      newItemDefinitionsList.forEach((item) => {
+        newItemDefinitions[item.id] = item;
+      });
       dispatch.valueState.updateItemDefinitions(newItemDefinitions);
     },
     /**
@@ -113,14 +133,31 @@ export const valueState = createModel<RootModel>()({
       rootState.valueState.activatedInventory.forEach((item) => {
         const itemDefinition = rootState.valueState.itemDefinitions[item];
         if (itemDefinition !== undefined) {
-          switch (itemDefinition.effect) {
-            case ItemEffect.增加:
-              realValue.scoreDiff += itemDefinition.value;
-              break;
+          itemDefinition.effects.forEach((effect) => {
+            switch (effect.effect) {
+              case ItemEffect.增加: {
+                if (realValue.score === effect.effectTo) {
+                  realValue.scoreDiff += effect.value;
+                }
+                break;
+              }
+              case ItemEffect.反转: {
+                if (realValue.score === effect.effectTo) {
+                  realValue.scoreDiff = -realValue.scoreDiff;
+                }
+                break;
+              }
+              case ItemEffect.转移: {
+                if (realValue.score === effect.effectFrom && effect.effectTo !== undefined) {
+                  realValue.score += effect.effectTo;
+                }
+                break;
+              }
 
-            default:
-              break;
-          }
+              default:
+                break;
+            }
+          });
         }
       });
 
