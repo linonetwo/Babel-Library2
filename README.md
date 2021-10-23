@@ -6,4 +6,8 @@
 
 ## 需求目标
 
-[详细需求文档（飞书文档）](https://bytedance.feishu.cn/docs/doccn0tJ9KyZybGRhb4eWcYsmHh?from=from_copylink)，以 ← 为准。
+[详细需求文档（飞书文档）](https://bytedance.feishu.cn/docs/doccn0tJ9KyZybGRhb4eWcYsmHh?from=from_copylink)，以 ← 为准，逐步更新到 README 中。
+
+- 包罗万象的图书馆宇宙里有不同主题的经历；
+- 不同的出身追求不同的最终结局，从不同的视角也会发现不同的宇宙观，这个图书馆宇宙的起源似乎有不同的解释；
+- 单局玩法：自动探索随机的图书馆，翻阅随机的文本（UI 待优化），并精读偶然遇到的有着详细内容的关键文本，从中了解图书馆相关的背景；
