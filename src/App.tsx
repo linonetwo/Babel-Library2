@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams } from 'react-router-dom';
+import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import './style.css';
 import 'nes.css/css/nes.min.css';
 import Home from './pages/home/Home';
