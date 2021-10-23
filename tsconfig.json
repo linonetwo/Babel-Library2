@@ -1,6 +1,6 @@
 {
   "exclude": [],
-  "include": ["src", "features"],
+  "include": ["src", "scripts"],
   "ts-node": {
     "files": true,
     "compilerOptions": {
