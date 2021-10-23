@@ -25,6 +25,8 @@ body {
   width: 100%;
   max-width: 390px;
   max-height: 844px;
+  overflow: hidden;
+  position: relative;
 }
 
 #root {
