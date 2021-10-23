@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.24ab01d0.chunk.css",
-    "main.js": "/static/js/main.cfc513c1.chunk.js",
-    "main.js.map": "/static/js/main.cfc513c1.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.ab037bd3.js",
-    "runtime-main.js.map": "/static/js/runtime-main.ab037bd3.js.map",
-    "static/css/2.3c2d599a.chunk.css": "/static/css/2.3c2d599a.chunk.css",
-    "static/js/2.2bf40ccb.chunk.js": "/static/js/2.2bf40ccb.chunk.js",
-    "static/js/2.2bf40ccb.chunk.js.map": "/static/js/2.2bf40ccb.chunk.js.map",
-    "static/js/3.06fcde18.chunk.js": "/static/js/3.06fcde18.chunk.js",
-    "static/js/3.06fcde18.chunk.js.map": "/static/js/3.06fcde18.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.3c2d599a.chunk.css.map": "/static/css/2.3c2d599a.chunk.css.map",
-    "static/css/main.24ab01d0.chunk.css.map": "/static/css/main.24ab01d0.chunk.css.map",
-    "static/js/2.2bf40ccb.chunk.js.LICENSE.txt": "/static/js/2.2bf40ccb.chunk.js.LICENSE.txt"
+    "main.css": "https://onetwo.ren/Babel-Library2/static/css/main.24ab01d0.chunk.css",
+    "main.js": "https://onetwo.ren/Babel-Library2/static/js/main.cfc513c1.chunk.js",
+    "main.js.map": "https://onetwo.ren/Babel-Library2/static/js/main.cfc513c1.chunk.js.map",
+    "runtime-main.js": "https://onetwo.ren/Babel-Library2/static/js/runtime-main.38b0461b.js",
+    "runtime-main.js.map": "https://onetwo.ren/Babel-Library2/static/js/runtime-main.38b0461b.js.map",
+    "static/css/2.3c2d599a.chunk.css": "https://onetwo.ren/Babel-Library2/static/css/2.3c2d599a.chunk.css",
+    "static/js/2.49c2ea44.chunk.js": "https://onetwo.ren/Babel-Library2/static/js/2.49c2ea44.chunk.js",
+    "static/js/2.49c2ea44.chunk.js.map": "https://onetwo.ren/Babel-Library2/static/js/2.49c2ea44.chunk.js.map",
+    "static/js/3.06fcde18.chunk.js": "https://onetwo.ren/Babel-Library2/static/js/3.06fcde18.chunk.js",
+    "static/js/3.06fcde18.chunk.js.map": "https://onetwo.ren/Babel-Library2/static/js/3.06fcde18.chunk.js.map",
+    "index.html": "https://onetwo.ren/Babel-Library2/index.html",
+    "static/css/2.3c2d599a.chunk.css.map": "https://onetwo.ren/Babel-Library2/static/css/2.3c2d599a.chunk.css.map",
+    "static/css/main.24ab01d0.chunk.css.map": "https://onetwo.ren/Babel-Library2/static/css/main.24ab01d0.chunk.css.map",
+    "static/js/2.49c2ea44.chunk.js.LICENSE.txt": "https://onetwo.ren/Babel-Library2/static/js/2.49c2ea44.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.ab037bd3.js",
+    "static/js/runtime-main.38b0461b.js",
     "static/css/2.3c2d599a.chunk.css",
-    "static/js/2.2bf40ccb.chunk.js",
+    "static/js/2.49c2ea44.chunk.js",
     "static/css/main.24ab01d0.chunk.css",
     "static/js/main.cfc513c1.chunk.js"
   ]
