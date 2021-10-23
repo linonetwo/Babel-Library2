@@ -3976,10 +3976,10 @@ case-sensitive-paths-webpack-plugin@2.3.0:
   resolved "https://registry.npmjs.org/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.3.0.tgz#23ac613cc9a856e4f88ff8bb73bbb5e989825cf7"
   integrity sha512-/4YgnZS8y1UXXmC02xD5rRrBEu6T5ub+mQHLNRj0fzTRbgdBYhsNo2V5EqwgqrExjxsjtF/OpAKAMkKsxbD5XQ==
 
-cdda-chinese-text-dataset@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.npmjs.org/cdda-chinese-text-dataset/-/cdda-chinese-text-dataset-0.0.1.tgz#d3bc2567a533c68923b5bce859c713f7bd574799"
-  integrity sha512-yFcb8zTUIfhVSHuqqSH5YLykDmJL9YIdHfM49pM5M6nzu9ja88ixkKeLHn59ebHTrBESexDwBzRw5t4dRL8pVg==
+cdda-chinese-text-dataset@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npmjs.org/cdda-chinese-text-dataset/-/cdda-chinese-text-dataset-0.0.2.tgz#bad5bb21e63e0e5c581d17ebfa3abe2d9b8c5fa4"
+  integrity sha512-TjUiw/2bqa0MMTbwQezNYKvTvYfxqYO2tNWaeCf1+ayUTJiAVqGQvN8tN30CL4FguEx+w5VRvTc7IeLZ10QyWQ==
   dependencies:
     lodash "4.17.21"
     preval.macro "^5.0.0"
