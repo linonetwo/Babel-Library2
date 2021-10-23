@@ -7,6 +7,8 @@ import { createModel } from '@rematch/core';
 import { VFile } from 'vfile';
 import type { RootModel } from './index';
 
+const parsedCddaJSONWithNameAndDescription = JSON.parse(cddaJSONWithNameAndDescription) as ICDDAJSONWithNameAndDescription[]
+
 interface IBookState {
   /** 要略读几本书才进入精读，一个范围用于随机选取 */
   skimThroughReadCountRange: [number, number];
@@ -57,7 +59,7 @@ export const bookState = createModel<RootModel>()({
       dispatch.bookState.clearSkimThroughReadingContent();
       const [min, max] = rootState.bookState.skimThroughReadCountRange;
       for (let counter = 0; counter < random(min, max); counter += 1) {
-        const randomBook = sample(cddaJSONWithNameAndDescription);
+        const randomBook = sample(parsedCddaJSONWithNameAndDescription);
         if (randomBook !== undefined) {
           dispatch.bookState.appendSkimThroughReadingContent(randomBook);
           await new Promise((resolve) => setTimeout(resolve, rootState.bookState.skimThroughReadInterval));
