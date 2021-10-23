@@ -1,6 +1,6 @@
 /* eslint-disable typescript-sort-keys/interface */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
-import { random, sample } from 'lodash';
+import { random, sample, sampleSize } from 'lodash';
 import { cddaJSONWithNameAndDescription, ICDDAJSONWithNameAndDescription } from 'cdda-chinese-text-dataset';
 import { IConfiguration, templateFileToNLCSTNodes, getConfigSchemaFromTemplate, IOutputWIthMetadata, randomOutlineToArrayWithMetadataCompiler } from 'tbg';
 import { createModel } from '@rematch/core';
@@ -36,7 +36,14 @@ interface IBookState {
   currentSkimThroughReadContent: ICDDAJSONWithNameAndDescription[];
   currentDetailedReadTemplate: string | undefined;
   currentDetailedReadContent: Array<IOutputWIthMetadata<IBookTextMetadata[]>>;
+  /**
+   * 目前游戏里可用的所有模板的目录
+   */
   detailedTemplateMenu: string[];
+  /**
+   * 当局精读里可用的随机抽取的几份模板的列表
+   */
+  currentDetailedTemplateNames: string[];
 }
 
 /**
@@ -52,10 +59,21 @@ export const bookState = createModel<RootModel>()({
     currentDetailedReadTemplate: undefined,
     currentDetailedReadContent: [],
     detailedTemplateMenu: [],
+    currentDetailedTemplateNames: [],
   } as IBookState,
   reducers: {
+    /**
+     * 更新目前游戏里可用的所有模板的目录
+     */
     updateDetailedTemplateMenu(state, newMenu: string[]) {
       state.detailedTemplateMenu = newMenu;
+      return state;
+    },
+    /**
+     * 更新当局精读里可用的随机抽取的几份模板的列表
+     */
+    updateCurrentDetailedTemplateNames(state, newTemplateNames: string[]) {
+      state.currentDetailedTemplateNames = newTemplateNames;
       return state;
     },
     clearSkimThroughReadingContent(state) {
@@ -89,8 +107,13 @@ export const bookState = createModel<RootModel>()({
         }
       }
     },
-    async startNewDetailedRead(payload, rootState) {
-      dispatch.bookState.clearDetailedReadingContent();
+    /**
+     * 加载并抽取几本精读用的书备选
+     * @param count 抽几本书放在备选里
+     * @param rootState
+     * @returns
+     */
+    async loadAvailableDetailedTemplates(count: number, rootState) {
       // 获取能用的模板
       let detailedTemplateMenu = rootState.bookState.detailedTemplateMenu;
       if (detailedTemplateMenu === undefined || detailedTemplateMenu.length === 0) {
@@ -98,11 +121,22 @@ export const bookState = createModel<RootModel>()({
         detailedTemplateMenu = detailedTemplateMenuContent.split('\n');
         dispatch.bookState.updateDetailedTemplateMenu(detailedTemplateMenu);
       }
-      const newDetailedTemplateName = sample(detailedTemplateMenu);
-      if (newDetailedTemplateName === undefined || newDetailedTemplateName.length === 0) {
+      const newDetailedTemplateNames = sampleSize(detailedTemplateMenu, count);
+      if (newDetailedTemplateNames.length === 0) {
         console.error(`没有抽取到合适的模板，可能 /public/templates/menu.txt 有问题`);
         return;
       }
+      dispatch.bookState.updateCurrentDetailedTemplateNames(newDetailedTemplateNames);
+    },
+    /**
+     * 选择好模板后，开始生成精读文本
+     * @param newDetailedTemplateName 要使用的模板名
+     * @param rootState
+     */
+    async startNewDetailedRead(newDetailedTemplateName: string, rootState) {
+      dispatch.bookState.clearDetailedReadingContent();
+      dispatch.bookState.updateCurrentDetailedTemplateNames([]);
+
       const newDetailedTemplateContent = await fetch(`/public/templates/${newDetailedTemplateName}`).then(async (response) => await response.text());
       const vFile = new VFile({ path: newDetailedTemplateName, value: newDetailedTemplateContent });
       // 开始自动生成
