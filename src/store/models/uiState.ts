@@ -7,6 +7,7 @@ interface IUIState {
    * 当前在玩的背景故事
    */
   currentScenario: string;
+  currentBookComment: string;
   endingText: string[];
   guideText: string[];
   scenarios: Array<{ description: string; id: string; name: string }>;
@@ -18,6 +19,7 @@ interface IUIState {
 export const uiState = createModel<RootModel>()({
   state: {
     currentScenario: 'alien',
+    currentBookComment: '',
     scenarios: [
       {
         name: '评价地球文明的外星人',
@@ -32,6 +34,10 @@ export const uiState = createModel<RootModel>()({
   reducers: {
     guideTextSetter(state, guideText: string[]) {
       state.guideText = guideText;
+      return state;
+    },
+    currentBookCommentSetter(state, currentBookComment: string) {
+      state.currentBookComment = currentBookComment;
       return state;
     },
     endingTextSetter(state, endingText: string[]) {

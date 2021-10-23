@@ -41,6 +41,10 @@ interface IBookState {
    */
   detailedTemplateMenu: string[];
   /**
+   * 滑稽的对模板生成文本的评论
+   */
+  bookComments: Record<string, string>;
+  /**
    * 当局精读里可用的随机抽取的几份模板的列表
    */
   currentDetailedTemplateNames: string[];
@@ -59,6 +63,7 @@ export const bookState = createModel<RootModel>()({
     currentDetailedReadTemplate: undefined,
     currentDetailedReadContent: [],
     detailedTemplateMenu: [],
+    bookComments: {},
     currentDetailedTemplateNames: [],
   } as IBookState,
   reducers: {
@@ -90,6 +95,10 @@ export const bookState = createModel<RootModel>()({
     },
     updateDetailedReadingContent(state, newDetailedReadingContent: Array<IOutputWIthMetadata<IBookTextMetadata[]>>) {
       state.currentDetailedReadContent = newDetailedReadingContent;
+      return state;
+    },
+    updateBookComments(state, newBookComments: Record<string, string>) {
+      state.bookComments = newBookComments;
       return state;
     },
   },
@@ -184,6 +193,22 @@ export const bookState = createModel<RootModel>()({
       }
       // newErrorMessage += reporter(vFile);
       console.warn('自动生成结束', newErrorMessage);
+    },
+    /**
+     * 加载对书的评论到 uiState currentBookComment 里
+     * @param templateName 需要加载评论的书名
+     * @param rootState
+     */
+    async loadCurrentBookComment(templateName: string, rootState) {
+      let bookComments = rootState.bookState.bookComments;
+      if (Object.keys(bookComments).length === 0) {
+        const newBookCommentContent = await fetch(`/public/templates/comment.json`).then(
+          async (response) => await (response.json() as Promise<Record<string, string>>),
+        );
+        dispatch.bookState.updateBookComments(newBookCommentContent);
+        bookComments = newBookCommentContent;
+      }
+      dispatch.uiState.currentBookCommentSetter(bookComments[templateName]);
     },
   }),
 });
