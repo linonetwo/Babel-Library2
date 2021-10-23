@@ -1,25 +1,26 @@
 {
   "files": {
     "main.css": "https://onetwo.ren/Babel-Library2/static/css/main.24ab01d0.chunk.css",
-    "main.js": "https://onetwo.ren/Babel-Library2/static/js/main.dd062e1a.chunk.js",
-    "main.js.map": "https://onetwo.ren/Babel-Library2/static/js/main.dd062e1a.chunk.js.map",
+    "main.js": "https://onetwo.ren/Babel-Library2/static/js/main.d0c092fb.chunk.js",
+    "main.js.map": "https://onetwo.ren/Babel-Library2/static/js/main.d0c092fb.chunk.js.map",
     "runtime-main.js": "https://onetwo.ren/Babel-Library2/static/js/runtime-main.1a99d835.js",
     "runtime-main.js.map": "https://onetwo.ren/Babel-Library2/static/js/runtime-main.1a99d835.js.map",
     "static/css/2.3c2d599a.chunk.css": "https://onetwo.ren/Babel-Library2/static/css/2.3c2d599a.chunk.css",
-    "static/js/2.ccbc0c14.chunk.js": "https://onetwo.ren/Babel-Library2/static/js/2.ccbc0c14.chunk.js",
-    "static/js/2.ccbc0c14.chunk.js.map": "https://onetwo.ren/Babel-Library2/static/js/2.ccbc0c14.chunk.js.map",
+    "static/js/2.67ff2ec2.chunk.js": "https://onetwo.ren/Babel-Library2/static/js/2.67ff2ec2.chunk.js",
+    "static/js/2.67ff2ec2.chunk.js.map": "https://onetwo.ren/Babel-Library2/static/js/2.67ff2ec2.chunk.js.map",
     "static/js/3.e2038983.chunk.js": "https://onetwo.ren/Babel-Library2/static/js/3.e2038983.chunk.js",
     "static/js/3.e2038983.chunk.js.map": "https://onetwo.ren/Babel-Library2/static/js/3.e2038983.chunk.js.map",
     "index.html": "https://onetwo.ren/Babel-Library2/index.html",
     "static/css/2.3c2d599a.chunk.css.map": "https://onetwo.ren/Babel-Library2/static/css/2.3c2d599a.chunk.css.map",
     "static/css/main.24ab01d0.chunk.css.map": "https://onetwo.ren/Babel-Library2/static/css/main.24ab01d0.chunk.css.map",
-    "static/js/2.ccbc0c14.chunk.js.LICENSE.txt": "https://onetwo.ren/Babel-Library2/static/js/2.ccbc0c14.chunk.js.LICENSE.txt"
+    "static/js/2.67ff2ec2.chunk.js.LICENSE.txt": "https://onetwo.ren/Babel-Library2/static/js/2.67ff2ec2.chunk.js.LICENSE.txt",
+    "static/media/robot.c4d90092.svg": "https://onetwo.ren/Babel-Library2/static/media/robot.c4d90092.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.1a99d835.js",
     "static/css/2.3c2d599a.chunk.css",
-    "static/js/2.ccbc0c14.chunk.js",
+    "static/js/2.67ff2ec2.chunk.js",
     "static/css/main.24ab01d0.chunk.css",
-    "static/js/main.dd062e1a.chunk.js"
+    "static/js/main.d0c092fb.chunk.js"
   ]
 }
