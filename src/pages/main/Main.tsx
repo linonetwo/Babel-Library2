@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-function Main() {
+export function Main(): JSX.Element {
   return (
     <Container className="">
       <Panel />
@@ -20,5 +20,3 @@ function Main() {
     </Container>
   );
 }
-
-export default Main;

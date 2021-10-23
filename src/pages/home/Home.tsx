@@ -1,4 +1,4 @@
-import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { FriendLinks } from './FriendLinks';
@@ -12,7 +12,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-function Home(): JSX.Element {
+export function Home(): JSX.Element {
   return (
     <Container className="">
       <Button />
@@ -20,5 +20,3 @@ function Home(): JSX.Element {
     </Container>
   );
 }
-
-export default Home;

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import './style.css';
 import 'nes.css/css/nes.min.css';
-import Home from './pages/home/Home';
-import Guide from './pages/guide/Guide';
-import Main from './pages/main/Main';
+import { Home } from './pages/home/Home';
+import { Guide } from './pages/guide/Guide';
+import { Main } from './pages/main/Main';
 
 const Container = styled.div`
   height: 100%;
@@ -22,10 +22,10 @@ function App(): JSX.Element {
       <Router>
         <Switch>
           <Route path="/main" exact>
-            <Main />;
+            <Main />
           </Route>
           <Route path="/guide" exact>
-            <Guide />;
+            <Guide />
           </Route>
           <Route path="/" exact>
             <Home />
