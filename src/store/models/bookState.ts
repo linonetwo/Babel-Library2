@@ -159,7 +159,7 @@ export const bookState = createModel<RootModel>()({
       // 获取能用的模板
       let detailedTemplateMenu = rootState.bookState.detailedTemplateMenu;
       if (detailedTemplateMenu === undefined || detailedTemplateMenu.length === 0) {
-        const detailedTemplateMenuContent = await fetch('/public/templates/menu.txt').then(async (response) => await response.text());
+        const detailedTemplateMenuContent = await fetch('templates/menu.txt').then(async (response) => await response.text());
         detailedTemplateMenu = detailedTemplateMenuContent.split('\n');
         dispatch.bookState.updateDetailedTemplateMenu(detailedTemplateMenu);
       }
@@ -179,7 +179,7 @@ export const bookState = createModel<RootModel>()({
       dispatch.bookState.clearDetailedReadingContent();
       dispatch.bookState.updateCurrentDetailedTemplateNames([]);
 
-      const newDetailedTemplateContent = await fetch(`/public/templates/${newDetailedTemplateName}`).then(async (response) => await response.text());
+      const newDetailedTemplateContent = await fetch(`templates/${newDetailedTemplateName}`).then(async (response) => await response.text());
       const vFile = new VFile({ path: newDetailedTemplateName, value: newDetailedTemplateContent });
       // 开始自动生成
       let newErrorMessage = '';
@@ -235,7 +235,7 @@ export const bookState = createModel<RootModel>()({
     async loadCurrentBookComment(templateName: string, rootState) {
       let bookComments = rootState.bookState.bookComments;
       if (Object.keys(bookComments).length === 0) {
-        const newBookCommentContent = await fetch(`/public/templates/comment.json`).then(
+        const newBookCommentContent = await fetch(`templates/comment.json`).then(
           async (response) => await (response.json() as Promise<Record<string, string>>),
         );
         dispatch.bookState.updateBookComments(newBookCommentContent);

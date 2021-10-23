@@ -159,9 +159,7 @@ export const valueState = createModel<RootModel>()({
   effects: (dispatch) => ({
     async loadItemDefinitions(payload, rootState) {
       const currentScenario = rootState.uiState.currentScenario;
-      const newItemDefinitionsList = await fetch(`/public/data/${currentScenario}/items.json`).then(
-        async (response) => await (response.json() as Promise<IItem[]>),
-      );
+      const newItemDefinitionsList = await fetch(`data/${currentScenario}/items.json`).then(async (response) => await (response.json() as Promise<IItem[]>));
       const newItemDefinitions: IItemDefinition = {};
       newItemDefinitionsList.forEach((item) => {
         newItemDefinitions[item.id] = item;
@@ -170,7 +168,7 @@ export const valueState = createModel<RootModel>()({
     },
     async loadEndingDefinitions(payload, rootState) {
       const currentScenario = rootState.uiState.currentScenario;
-      const newEndingList = await fetch(`/public/data/${currentScenario}/ending.json`).then(async (response) => await (response.json() as Promise<IEnding[]>));
+      const newEndingList = await fetch(`data/${currentScenario}/ending.json`).then(async (response) => await (response.json() as Promise<IEnding[]>));
       dispatch.valueState.updateEndingDefinitions(newEndingList);
     },
     /**
