@@ -1,0 +1,14 @@
+[
+  {
+    "name": "康米主义",
+    "description": "人类一种对于大同的描述",
+    "comment": "我感觉它在影射经济进步的有效解法",
+    "effects": [{ "effect": 1, "effectFrom": "资源", "effectTo": "道德" }]
+  },
+  {
+    "name": "xx主义",
+    "description": "xxx",
+    "comment": "ooo",
+    "effects": [{ "effect": 0, "effectTo": "道德", "value": 3 }]
+  }
+]
