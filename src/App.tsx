@@ -6,6 +6,7 @@ import 'nes.css/css/nes.min.css';
 import Home from './pages/home/Home';
 import Guide from './pages/guide/Guide';
 import Main from './pages/main/Main';
+import Reading from './pages/reading';
 
 const Container = styled.div`
   height: 100%;
@@ -22,10 +23,13 @@ function App(): JSX.Element {
       <Router>
         <Switch>
           <Route path="/main" exact>
-            <Main />;
+            <Main />
           </Route>
           <Route path="/guide" exact>
-            <Guide />;
+            <Guide />
+          </Route>
+          <Route path="/reading" exact>
+            <Reading />
           </Route>
           <Route path="/" exact>
             <Home />

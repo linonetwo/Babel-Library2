@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Panel from '../../components/panel';
-import Chat from './chat';
-import StuffBar from './stuff';
+import Article from './article';
 
 const Container = styled.div`
   display: flex;
@@ -11,14 +10,11 @@ const Container = styled.div`
   width: 100%;
 `;
 
-function Main() {
+export default () => {
   return (
     <Container className="">
       <Panel />
-      <Chat />
-      <StuffBar />
+      <Article />
     </Container>
   );
-}
-
-export default Main;
+};
