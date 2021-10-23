@@ -5,6 +5,7 @@ import './style.css';
 import 'nes.css/css/nes.min.css';
 
 import ReadingPage from './pages/reading';
+import ChoicePage from './pages/choice';
 import { Home } from './pages/home/Home';
 import { Guide } from './pages/guide/Guide';
 import { Main } from './pages/main/Main';
@@ -31,6 +32,9 @@ function App(): JSX.Element {
           </Route>
           <Route path="/reading" exact>
             <ReadingPage />
+          </Route>
+          <Route path="/choice" exact>
+            <ChoicePage />
           </Route>
           <Route path="/" exact>
             <Home />

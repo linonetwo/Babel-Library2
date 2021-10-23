@@ -20,6 +20,12 @@ export function Home(): JSX.Element {
       <Link to="/reading">
         <h1>阅读界面</h1>
       </Link>
+      <Link to="/reading">
+        <h1>阅读界面</h1>
+      </Link>
+      <Link to="/choice">
+        <h1>选书界面</h1>
+      </Link>
       <FriendLinks />
     </Container>
   );
