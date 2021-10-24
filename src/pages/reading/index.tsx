@@ -24,12 +24,14 @@ const Content = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
+  overflow: scroll;
 `;
 
 export default () => {
   const history = useHistory();
   const currentTemplate = useSelector((state: RootState) => state.bookState.currentDetailedReadTemplate);
   const content = useSelector((state: RootState) => state.bookState.currentDetailedReadContent);
+  const [currentDetailedRead, currentDetailedReadSetter] = useState<string[]>([]);
   console.log('currentTemplate', currentTemplate);
   console.log('content', content);
 
@@ -65,7 +67,9 @@ export default () => {
         <Material />
       </Dialog>
       <Content>
-        <Article />
+        {content.map((item) => (
+          <Article content={item.value} />
+        ))}
       </Content>
     </Container>
   );
