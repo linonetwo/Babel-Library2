@@ -67,7 +67,7 @@ interface IBookState {
  */
 export const bookState = createModel<RootModel>()({
   state: {
-    skimThroughReadCountRange: [10, 20],
+    skimThroughReadCountRange: [1, 2],
     skimThroughReadInterval: 4000,
     detailedReadWithScoreFrequency: 0.4,
     detailedReadWithItemFrequency: 0.2,
@@ -180,21 +180,27 @@ export const bookState = createModel<RootModel>()({
       dispatch.bookState.updateCurrentDetailedTemplateNames([]);
 
       const newDetailedTemplateContent = await fetch(`templates/${newDetailedTemplateName}`).then(async (response) => await response.text());
+      console.log(newDetailedTemplateContent);
       const vFile = new VFile({ path: newDetailedTemplateName, value: newDetailedTemplateContent });
+      console.log('vFile', vFile);
       // 开始自动生成
       let newErrorMessage = '';
       try {
         const templateData = templateFileToNLCSTNodes(vFile);
+        console.log('templateData', templateData);
         // TODO: 暂时没用上模板槽位
         const configFormData = {};
         if (configFormData === undefined) {
           throw new Error('模板参数不正确');
         }
+
+        console.log(configFormData);
         const result: Array<IOutputWIthMetadata<unknown[]>> = randomOutlineToArrayWithMetadataCompiler(templateData, configFormData);
         // 为文本带上随机的数值内容
         const scoreIDs = Object.keys(rootState.valueState.scores);
         const itemIDs = Object.keys(rootState.valueState.itemDefinitions);
         const resultWithRandomMetadata: Array<IOutputWIthMetadata<IBookTextMetadata[]>> = result.map((aResult) => {
+          console.log('aResult', aResult);
           // 每行文本都随机抽取一下
           const randomScoreID = sample(scoreIDs);
           const randomItemID = sample(itemIDs);
@@ -220,6 +226,7 @@ export const bookState = createModel<RootModel>()({
             metadata: metadataItem !== undefined ? [metadataItem] : undefined,
           };
         });
+        console.log('resultWithRandomMetadata', resultWithRandomMetadata);
         dispatch.bookState.updateDetailedReadingContent(resultWithRandomMetadata);
       } catch (error) {
         newErrorMessage += (error as Error).message;

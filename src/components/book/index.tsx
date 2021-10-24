@@ -33,12 +33,20 @@ const Container = styled.div`
   }
 `;
 
-export default () => {
+interface BookProps {
+  name: string;
+  onChoose: (name: string) => void;
+}
+
+export default ({ name, onChoose }: BookProps) => {
+  const onClick = () => {
+    onChoose(name);
+  };
   return (
-    <Container>
+    <Container onClick={onClick}>
       <img className="cover" src={Face} />
-      <h1>书名</h1>
-      <p>简短的简介，kkk，嗯嗯嗯</p>
+      <h1>{name}</h1>
+      <p>---</p>
     </Container>
   );
 };

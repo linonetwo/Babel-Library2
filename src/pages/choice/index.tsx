@@ -1,4 +1,7 @@
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dispatch, RootState } from 'src/store/store';
 import styled from 'styled-components';
 import Speaker from '../../components/speaker';
 import Book from '../../components/book';
@@ -19,12 +22,25 @@ const Container = styled.div`
 `;
 
 export default (): JSX.Element => {
+  const history = useHistory();
+  const books = useSelector((state: RootState) => state.bookState.currentDetailedTemplateNames);
+
+  const dispatch = useDispatch<Dispatch>();
+  useEffect(() => {
+    dispatch.bookState.loadAvailableDetailedTemplates(3);
+  }, []);
+
+  const onChooseBook = async (name: string) => {
+    await dispatch.bookState.startNewDetailedRead(name);
+    history.push('/reading');
+  };
+
   return (
     <Container>
       <div className="bookList">
-        <Book />
-        <Book />
-        <Book />
+        {books.map((book) => (
+          <Book key={book} name={book} onChoose={onChooseBook} />
+        ))}
       </div>
       <Speaker />
     </Container>

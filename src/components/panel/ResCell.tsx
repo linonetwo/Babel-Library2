@@ -34,14 +34,19 @@ const ResProgress = styled.progress`
   margin: 0;
 `;
 
-export default () => {
+interface ResCellProps {
+  name: string;
+  value: number;
+}
+
+export default ({ name, value = 0 }: ResCellProps) => {
   return (
     <ResCell>
       <Row>
         <Icon />
-        <Text>资源</Text>
+        <Text>{name}</Text>
       </Row>
-      <ResProgress className="nes-progress" value="90" max="100"></ResProgress>
+      <ResProgress className="nes-progress" value={value} max="10"></ResProgress>
     </ResCell>
   );
 };

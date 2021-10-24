@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dispatch, RootState } from 'src/store/store';
 import Panel from '../../components/panel';
 import Dialog from '../../components/dialog';
 import Material from '../../components/material';
@@ -24,6 +27,28 @@ const Content = styled.div`
 `;
 
 export default () => {
+  const history = useHistory();
+  const currentTemplate = useSelector((state: RootState) => state.bookState.currentDetailedReadTemplate);
+  const content = useSelector((state: RootState) => state.bookState.currentDetailedReadContent);
+  console.log('currentTemplate', currentTemplate);
+  console.log('content', content);
+
+  const dispatch = useDispatch<Dispatch>();
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch.valueState.updateScore('resource', 1);
+    }, 1000);
+    setTimeout(() => {
+      dispatch.valueState.updateScore('menace', 1);
+    }, 2000);
+    setTimeout(() => {
+      dispatch.valueState.updateScore('culture', 1);
+    }, 3000);
+
+    // 退出 mock
+    // history.replace('/main');
+  }, []);
+
   const [active, setActive] = useState(false);
   const onClose = () => {
     setActive(!active);

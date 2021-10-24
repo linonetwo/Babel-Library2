@@ -1,5 +1,6 @@
 import { dropRight, takeRight } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Dispatch, RootState } from 'src/store/store';
@@ -63,12 +64,17 @@ function ChatRight(props: { message: string }) {
 }
 
 export function SkimThroughReadChat(): JSX.Element {
+  const history = useHistory();
   const currentSkimThroughReadContent = useSelector((state: RootState) => state.bookState.currentSkimThroughReadContent);
   const skimThroughReadInterval = useSelector((state: RootState) => state.bookState.skimThroughReadInterval);
   const [currentSkimThroughChat, currentSkimThroughChatSetter] = useState<string[]>([]);
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    dispatch.bookState.startNewSkimThroughRead({});
+    const fn = async () => {
+      await dispatch.bookState.startNewSkimThroughRead({});
+      history.push('/choice');
+    };
+    fn();
   }, []);
 
   const scrollBottomRef = useRef<HTMLDivElement>(null);
@@ -106,7 +112,7 @@ export function SkimThroughReadChat(): JSX.Element {
   return (
     <SectionList className="message-list">
       {currentSkimThroughChat.map((bookDescription, index) =>
-        index % 2 === 0 ? <ChatLeft message={bookDescription} /> : <ChatRight message={bookDescription} />,
+        index % 2 === 0 ? <ChatLeft key={bookDescription} message={bookDescription} /> : <ChatRight key={bookDescription} message={bookDescription} />,
       )}
       <div id="section-scroll-bottom-anchor" ref={scrollBottomRef} />
     </SectionList>

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactComponentElement, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 interface MaskProps {
@@ -60,7 +60,6 @@ const Mask = styled.div<MaskProps>`
 export default ({ active = false, onClose, children }: DialogProps) => {
   const onClick = (event: any) => {
     event.stopPropagation();
-    console.log('ssss');
     onClose();
   };
   return (

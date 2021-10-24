@@ -72,7 +72,7 @@ interface IValueState {
    * 当前的计分板，可以分为多个维度，例如「资源，威胁，道德」，各自有自己的得分
    * 同时这个字段的 key 也作为 score 的 schema 使用，可以 Object.keys 后用于得知有哪几个 score 维度
    */
-  scores: Record<string, number | undefined>;
+  scores: Record<string, number>;
   /**
    * 当前持有的物品 ID 列表
    */
@@ -100,7 +100,11 @@ interface IValueState {
  */
 export const valueState = createModel<RootModel>()({
   state: {
-    scores: {},
+    scores: {
+      resource: 0,
+      menace: 0,
+      culture: 0,
+    },
     inventory: [],
     activatedInventory: [],
     itemDefinitions: {},
