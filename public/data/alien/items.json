@@ -1,26 +1,184 @@
 [
-  {
-    "id": "康米主义",
-    "description": "人类一种对于大同的描述",
-    "comment": "我感觉它在影射经济进步的有效解法",
-    "effects": [{ "effect": 1, "effectFrom": "资源", "effectTo": "道德" }]
-  },
-  {
-    "id": "xx主义",
-    "description": "xxx",
-    "comment": "ooo",
-    "effects": [{ "effect": 0, "effectTo": "道德", "value": 3 }]
-  },
-   {
-    "id": "xx主义",
-    "description": "xxx",
-    "comment": "ooo",
-    "effects": [{ "effect": 0, "effectTo": "道德", "value": 3 }]
-  },
-  
-
+    {
+        "id": "奇怪的XP",
+        "description": "奇怪的性知识增加了",
+        "comment": "在探索中我们发现‘人类’各种奇怪的性行为，竟成为了他们文化的一部分",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "道德",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "id": "美食家",
+        "description": "一切皆可食用",
+        "comment": "我们发现了一支名为‘广东人的分支，似乎他们从未因食物短缺而发愁’",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "资源",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "id": "环保主义",
+        "description": "绿水青山就是金山银山",
+        "comment": "几只地球人部落签订协议，共同抵御环境污染，似乎达成了某种共识“",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "资源",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "id": "网瘾",
+        "description": "互联网太好玩了，有点上头",
+        "comment": "道理我都懂，为什么信息流刷的停不下来？",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "威胁",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "id": "烂梗王",
+        "description": "做乜嘢做啊，3点几啦，饮茶先啦！",
+        "comment": "原来人类的加密语言是这个意思，似乎可以读懂常用交流暗语",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "威胁",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "id": "民科",
+        "description": "人人都是科学带师",
+        "comment": "这个物种似乎全民都有狂热的科学意识，但是二氢化氧到底是什么？",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "威胁",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "id": "保守主义",
+        "description": "见鬼，他们不害臊吗",
+        "comment": "根据人类圣经《古兰经》显示，女性不应该暴露除了眼睛以外的任何身体部位",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "道德",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "id": "女权主义",
+        "description": "一种男子防身术",
+        "comment": "用来指导雄性生物行为和观念的操作指南",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "道德",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "id": "女拳主义",
+        "description": "一种女子防身术",
+        "comment": "用来保护雌性生物的话术集合",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "道德",
+                "value": -1
+            }
+        ]
+    },
+    {
+        "id": "康米主义",
+        "description": "人类一种对于终极社会形态的描述",
+        "comment": "我感觉它在影射经济进步的有效解法",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "道德",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "id": "实用主义",
+        "description": "一切皆可为资源，包括人类本身",
+        "comment": "看起来他们是靠远古生物的尸体做燃料来维持基本生存的，有趣",
+        "effects": [
+            {
+                "effect": 1,
+                "effectFrom":"道德",
+                "effectTo": "资源"
+            }
+        ]
+    },
+    {
+        "id": "内卷",
+        "description": "草，卷起来了",
+        "comment": "这个物种对相互争夺资源的动力大于开拓的动力，并且很有自信",
+        "effects": [
+            {
+                "effect": 1,
+                "effectFrom":"资源",
+                "effectTo": "威胁"
+            }
+        ]
+    },
+    {
+        "id": "好奇心",
+        "description": "外星人的本质是复读机",
+        "comment": "我认为这个文明里的很多东西，都可以为我所用",
+        "effects": [
+            {
+                "effect": 1,
+                "effectFrom":"威胁",
+                "effectTo": "道德"
+            }
+        ]
+    },
+    {
+        "id": "虚无主义",
+        "description": "躺平即真理，无知即正义",
+        "comment": "这个物种的一部分群体陷入对宇宙知识的无意义的绝望之中，看上去毫无生气 ...",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "道德",
+                "value": 0
+            }
+        ]
+    },
+    {
+        "id": "精神错乱",
+        "description": "我看不懂，但大受震撼",
+        "comment": "我是谁？我在哪儿？我在干啥？这TM又是啥？",
+        "effects": [
+            {
+                "effect": 0,
+                "effectTo": "道德",
+                "value": 0
+            }
+        ]
+    }
 ]
-
-
 
 
