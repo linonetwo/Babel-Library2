@@ -10,5 +10,17 @@
     "description": "xxx",
     "comment": "ooo",
     "effects": [{ "effect": 0, "effectTo": "道德", "value": 3 }]
-  }
+  },
+   {
+    "id": "xx主义",
+    "description": "xxx",
+    "comment": "ooo",
+    "effects": [{ "effect": 0, "effectTo": "道德", "value": 3 }]
+  },
+  
+
 ]
+
+
+
+
