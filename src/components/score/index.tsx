@@ -12,7 +12,7 @@ const Panel = styled.div`
   background-color: #c4c4c4;
 `;
 
-export default function ScorePanel(): JSX.Element {
+export function ScorePanel(): JSX.Element {
   const scores = useSelector((state: RootState) => state.valueState.scores);
   return (
     <Panel>

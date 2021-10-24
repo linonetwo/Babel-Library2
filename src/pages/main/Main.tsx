@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Panel from '../../components/score';
+import { ScorePanel } from '../../components/score';
 import { SkimThroughReadChat } from './chat';
 import { InventoryBar } from '../../components/inventory';
 
@@ -13,7 +13,7 @@ const Container = styled.div`
 export function Main(): JSX.Element {
   return (
     <Container>
-      <Panel />
+      <ScorePanel />
       <SkimThroughReadChat />
       <InventoryBar />
     </Container>

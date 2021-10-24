@@ -33,8 +33,6 @@ const Item = styled.div`
 export function InventoryBar(): JSX.Element {
   const inventory = useSelector((state: RootState) => state.valueState.inventory);
   const dispatch = useDispatch<Dispatch>();
-  // DEBUG: console
-  console.log(`inventory`, inventory);
   return (
     <Container>
       {inventory.map((item) => (

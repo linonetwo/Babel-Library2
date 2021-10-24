@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch, RootState } from 'src/store/store';
-import Panel from '../../components/score';
+import { ScorePanel } from '../../components/score';
 import Article from './article';
 
 const Container = styled.div`
@@ -31,6 +31,7 @@ export default function DetailedReading(): JSX.Element {
   const detailedReadRound = useSelector((state: RootState) => state.bookState.detailedReadRound);
   const currentDetailedReadRound = useSelector((state: RootState) => state.bookState.currentDetailedReadRound);
   const dispatch = useDispatch<Dispatch>();
+  const [detailedReadEnd, detailedReadEndSetter] = useState<boolean>(false);
 
   const [page, setPage] = useState(0);
   useEffect(() => {
@@ -46,17 +47,44 @@ export default function DetailedReading(): JSX.Element {
       if (currentDetailedReadRound >= detailedReadRound) {
         // 是的话就进入结束界面
       } else {
-        // 否则就继续读
-        dispatch.bookState.updateCurrentDetailedReadRound(currentDetailedReadRound + 1);
-        // 跳回略读界面
-        history.replace('/main');
+        // 否则就继续读，先展示当前阅读结论
+        detailedReadEndSetter(true);
       }
     }
-  }, [currentDetailedReadRound, detailedReadRound, page, setPage]);
+  }, [currentDetailedReadRound, detailedReadRound, page, setPage, detailedReadEndSetter]);
+  const readEndText = content
+    .flatMap((line) =>
+      (line.metadata ?? []).map((metadata) => {
+        let text = '';
+        if ('item' in metadata) {
+          text += `获得了「${metadata.item}」。`;
+        }
+        if ('score' in metadata) {
+          text += `「${metadata.score}」得重新评估了。`;
+        }
+        return text;
+      }),
+    )
+    .join('\n');
   return (
     <Container>
-      <Panel />
-      <Content>{content[page] !== undefined && <Article content={content[page]} nextPage={onNextPage} />}</Content>
+      <ScorePanel />
+      {detailedReadEnd ? (
+        <Content>
+          {content[page] !== undefined && (
+            <Article
+              content={{ value: readEndText, metadata: [] }}
+              nextPage={() => {
+                // 跳回略读界面
+                dispatch.bookState.updateCurrentDetailedReadRound(currentDetailedReadRound + 1);
+                history.replace('/main');
+              }}
+            />
+          )}
+        </Content>
+      ) : (
+        <Content>{content[page] !== undefined && <Article content={content[page]} nextPage={onNextPage} />}</Content>
+      )}
     </Container>
   );
 }
