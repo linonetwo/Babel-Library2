@@ -10,6 +10,8 @@ import { Home } from './pages/home/Home';
 import { Guide } from './pages/guide/Guide';
 import { Main } from './pages/main/Main';
 
+import { ItemInspectDialog } from 'src/components/dialog';
+
 const Container = styled.div`
   height: 100%;
   width: 100%;
@@ -17,7 +19,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden; 
+  overflow: hidden;
 `;
 
 function App(): JSX.Element {
@@ -42,6 +44,7 @@ function App(): JSX.Element {
           </Route>
         </Switch>
       </Router>
+      <ItemInspectDialog />
     </Container>
   );
 }

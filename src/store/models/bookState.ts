@@ -185,9 +185,7 @@ export const bookState = createModel<RootModel>()({
       dispatch.bookState.updateCurrentDetailedTemplateNames([]);
 
       const newDetailedTemplateContent = await fetch(`templates/${newDetailedTemplateName}`).then(async (response) => await response.text());
-      console.log(newDetailedTemplateContent);
       const vFile = new VFile({ path: newDetailedTemplateName, value: newDetailedTemplateContent });
-      console.log('vFile', vFile);
       // 开始自动生成
       let newErrorMessage = '';
       try {

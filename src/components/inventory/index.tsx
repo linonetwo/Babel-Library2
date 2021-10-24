@@ -22,44 +22,26 @@ const Cell = styled.div`
   align-items: center;
 `;
 
-const Item = styled.img`
+const Item = styled.div`
   width: 100%;
   height: 100%;
   object-fit: contain;
   background-color: #4f4f4f;
+  color: white;
 `;
 
-export default () => {
-  let history = useHistory();
+export function InventoryBar(): JSX.Element {
   const inventory = useSelector((state: RootState) => state.valueState.inventory);
-
-  console.log('inventory', inventory);
+  const dispatch = useDispatch<Dispatch>();
+  // DEBUG: console
+  console.log(`inventory`, inventory);
   return (
     <Container>
-      <Cell>
-        <Item />
-      </Cell>
-      <Cell>
-        <Item />
-      </Cell>
-      <Cell>
-        <Item />
-      </Cell>
-      <Cell>
-        <Item />
-      </Cell>
-      <Cell>
-        <Item />
-      </Cell>
-      <Cell>
-        <Item />
-      </Cell>
-      <Cell>
-        <Item />
-      </Cell>
-      <Cell>
-        <Item />
-      </Cell>
+      {inventory.map((item) => (
+        <Cell key={item} onClick={() => dispatch.uiState.inspectItem(item)}>
+          <Item>{item[0]}</Item>
+        </Cell>
+      ))}
     </Container>
   );
-};
+}

@@ -38,9 +38,9 @@ const Avatar = styled.img<{ mirror?: boolean }>`
   ${({ mirror }) => mirror && `transform: rotateY(180deg);`}
 `;
 
-function ChatLeft(props: { message: string }) {
+function ChatLeft(props: { message: string; onClick?: () => void }) {
   return (
-    <Message className="message -left">
+    <Message className="message -left" onClick={props.onClick}>
       <Balloon className="nes-balloon from-left">
         <BalloonContent direction="left">
           <p>这本书里面提到{props.message}</p>
@@ -68,11 +68,12 @@ export function SkimThroughReadChat(): JSX.Element {
   const currentSkimThroughReadContent = useSelector((state: RootState) => state.bookState.currentSkimThroughReadContent);
   const skimThroughReadInterval = useSelector((state: RootState) => state.bookState.skimThroughReadInterval);
   const [currentSkimThroughChat, currentSkimThroughChatSetter] = useState<string[]>([]);
+  const [skimThroughEnd, skimThroughEndSetter] = useState<boolean>(false);
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
     const fn = async () => {
       await dispatch.bookState.startNewSkimThroughRead({});
-      history.push('/choice');
+      skimThroughEndSetter(true);
     };
     fn();
   }, []);
@@ -113,6 +114,14 @@ export function SkimThroughReadChat(): JSX.Element {
     <SectionList className="message-list">
       {currentSkimThroughChat.map((bookDescription, index) =>
         index % 2 === 0 ? <ChatLeft key={bookDescription} message={bookDescription} /> : <ChatRight key={bookDescription} message={bookDescription} />,
+      )}
+      {skimThroughEnd && (
+        <ChatLeft
+          message="......好多内容！这里！终于找到一本有价值的书了，在这本旁边好像有人还整理了几本也被翻阅得很旧的书放在一起。（点击此对话泡，进入精读界面）"
+          onClick={() => {
+            history.push('/choice');
+          }}
+        />
       )}
       <div id="section-scroll-bottom-anchor" ref={scrollBottomRef} />
     </SectionList>

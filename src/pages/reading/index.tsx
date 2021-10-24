@@ -4,8 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch, RootState } from 'src/store/store';
 import Panel from '../../components/score';
-import Dialog from '../../components/dialog';
-import Material from '../../components/material';
 import Article from './article';
 
 const Container = styled.div`
@@ -39,11 +37,6 @@ export default function DetailedReading(): JSX.Element {
     setPage(0);
   }, [content]);
 
-  const [active, setActive] = useState(false);
-  const onClose = (): void => {
-    setActive(!active);
-  };
-
   const onNextPage = useCallback((): void => {
     if (page < content.length - 1) {
       setPage(page + 1);
@@ -59,14 +52,10 @@ export default function DetailedReading(): JSX.Element {
         history.replace('/main');
       }
     }
-  }, [currentDetailedReadRound, detailedReadRound]);
+  }, [currentDetailedReadRound, detailedReadRound, page, setPage]);
   return (
     <Container>
       <Panel />
-      <button onClick={onClose}>open</button>
-      <Dialog active={active} onClose={onClose}>
-        <Material />
-      </Dialog>
       <Content>{content[page] !== undefined && <Article content={content[page]} nextPage={onNextPage} />}</Content>
     </Container>
   );

@@ -1,10 +1,8 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { Dispatch, RootState } from 'src/store/store';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store/store';
 
-import ResCell from './ResultCell';
+import ResultCell from './ResultCell';
 
 const Panel = styled.div`
   display: flex;
@@ -19,7 +17,7 @@ export default function ScorePanel(): JSX.Element {
   return (
     <Panel>
       {Object.keys(scores).map((key: string) => (
-        <ResCell name={key} key={key} value={scores[key]} />
+        <ResultCell name={key} key={key} value={scores[key]} />
       ))}
     </Panel>
   );

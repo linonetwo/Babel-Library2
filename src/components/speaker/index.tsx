@@ -17,15 +17,15 @@ const Container = styled.div`
   }
 `;
 
-export default () => {
+export function DetailedReadingGuide(): JSX.Element {
   return (
     <Container>
       <section className="message -right">
         <div className="nes-balloon from-right">
-          <p>点击引导者头像进入探索进程。</p>
+          <p>选择一本书仔细研读。</p>
         </div>
       </section>
       <img className="avatar" src={Face} />
     </Container>
   );
-};
+}

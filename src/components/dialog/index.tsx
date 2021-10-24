@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch, RootState } from 'src/store/store';
 import styled from 'styled-components';
+
+import { ItemDescription } from 'src/components/item';
 
 interface MaskProps {
   active: boolean;
@@ -57,26 +61,25 @@ const Mask = styled.div<MaskProps>`
   justify-content: center;
 `;
 
-export default ({ active = false, onClose, children }: DialogProps) => {
-  const onClick = (event: any) => {
-    event.stopPropagation();
-    onClose();
-  };
+export function ItemInspectDialog(): JSX.Element {
+  const item = useSelector((state: RootState) => state.uiState.itemToInspect && state.valueState.itemDefinitions[state.uiState.itemToInspect]);
+  const open = useSelector((state: RootState) => state.uiState.inventoryOpen);
+  const dispatch = useDispatch<Dispatch>();
+  const onClick = useCallback((): void => {
+    dispatch.uiState.closeInventoryInspectDialog();
+  }, []);
   return (
-    <Mask active={active} onClick={onClick}>
-      <Dialog open={active} className="nes-dialog is-rounded" onClick={(e) => e.stopPropagation()}>
+    <Mask active={open} onClick={onClick}>
+      <Dialog open={open} className="nes-dialog is-rounded" onClick={(e) => e.stopPropagation()}>
         <Content>
-          <Body>{children}</Body>
+          {item && <ItemDescription item={item} />}
           <Menu className="dialog-menu">
             <button className="nes-btn" onClick={onClick}>
               关闭
-            </button>
-            <button className="nes-btn is-primary" onClick={onClick}>
-              确认
             </button>
           </Menu>
         </Content>
       </Dialog>
     </Mask>
   );
-};
+}

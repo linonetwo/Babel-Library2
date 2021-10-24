@@ -1,8 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import Panel from '../../components/score';
 import { SkimThroughReadChat } from './chat';
-import StuffBar from '../../components/stuff';
+import { InventoryBar } from '../../components/inventory';
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +15,7 @@ export function Main(): JSX.Element {
     <Container>
       <Panel />
       <SkimThroughReadChat />
-      <StuffBar />
+      <InventoryBar />
     </Container>
   );
 }

@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const ResCell = styled.div`
+const ResultCell = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -41,12 +40,12 @@ interface ResultCellProps {
 
 export default function functionResultCell({ name, value = 0 }: ResultCellProps): JSX.Element {
   return (
-    <ResCell>
+    <ResultCell>
       <Row>
         <Icon />
         <Text>{name}</Text>
       </Row>
       <ResultProgress className="nes-progress" value={value} max="10"></ResultProgress>
-    </ResCell>
+    </ResultCell>
   );
 }

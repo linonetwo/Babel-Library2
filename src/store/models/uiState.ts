@@ -10,6 +10,14 @@ interface IUIState {
   currentScenario: string;
   endingText: string[];
   guideText: string[];
+  /**
+   * 当前是否打开物品检视弹框
+   */
+  inventoryOpen: boolean;
+  /**
+   * 物品检视弹框里查看的物品
+   */
+  itemToInspect: string | undefined;
   scenarios: Array<{ description: string; id: string; name: string }>;
 }
 
@@ -30,6 +38,8 @@ export const uiState = createModel<RootModel>()({
     ],
     guideText: [],
     endingText: [],
+    inventoryOpen: false,
+    itemToInspect: undefined,
   } as IUIState,
   reducers: {
     guideTextSetter(state, guideText: string[]) {
@@ -42,6 +52,15 @@ export const uiState = createModel<RootModel>()({
     },
     endingTextSetter(state, endingText: string[]) {
       state.endingText = endingText;
+      return state;
+    },
+    inspectItem(state, itemID: string) {
+      state.itemToInspect = itemID;
+      state.inventoryOpen = true;
+      return state;
+    },
+    closeInventoryInspectDialog(state) {
+      state.inventoryOpen = false;
       return state;
     },
   },

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch, RootState } from 'src/store/store';
 import styled from 'styled-components';
-import Speaker from '../../components/speaker';
+import { DetailedReadingGuide } from '../../components/speaker';
 import Book from '../../components/book';
 
 const Container = styled.div`
@@ -42,7 +42,7 @@ export default (): JSX.Element => {
           <Book key={book} name={book} onChoose={onChooseBook} />
         ))}
       </div>
-      <Speaker />
+      <DetailedReadingGuide />
     </Container>
   );
 };
