@@ -19,11 +19,15 @@ const GuiderImage = styled.img`
   left: 0;
 `;
 
-const ScrollBox = styled.div`
-  height: 50%;
+const ScrollBox = styled.section`
+  height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: column;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 `;
 
 interface MessageBoxProps {
@@ -47,7 +51,7 @@ export function Guide(): JSX.Element {
   }, []);
   return (
     <Container className="nes-container">
-      <section className="message-list">
+      <ScrollBox className="message-list">
         {guideText.map((text, index) => (
           <section className={`message ${index % 2 === 0 ? '-left' : '-right'}`}>
             <div className={`nes-balloon from${index % 2 === 0 ? '-left' : '-right'}`}>
@@ -55,7 +59,7 @@ export function Guide(): JSX.Element {
             </div>
           </section>
         ))}
-      </section>
+      </ScrollBox>
       <Link to="/main">
         <GuiderImage src={Guider} />
       </Link>
