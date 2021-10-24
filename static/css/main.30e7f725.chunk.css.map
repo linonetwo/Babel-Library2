@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/style.css"],"names":[],"mappings":"AACA,KACE,WACF","file":"main.30e7f725.chunk.css","sourcesContent":["@import \"~@blueprintjs/popover2/lib/css/blueprint-popover2.css\";\n.app {\n  width: 375px;\n}"]}
