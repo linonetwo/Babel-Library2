@@ -1,6 +1,5 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { Tooltip2 } from '@blueprintjs/popover2';
 import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch, RootState } from 'src/store/store';
 
@@ -37,7 +36,9 @@ export function InventoryBar(): JSX.Element {
     <Container>
       {inventory.map((item) => (
         <Cell key={item} onClick={() => dispatch.uiState.inspectItem(item)}>
-          <Item>{item[0]}</Item>
+          <Tooltip2 content={`查看${item}`}>
+            <Item>{item[0]}</Item>
+          </Tooltip2>
         </Cell>
       ))}
     </Container>

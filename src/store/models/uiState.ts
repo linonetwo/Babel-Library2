@@ -8,7 +8,6 @@ interface IUIState {
    * 当前在玩的背景故事
    */
   currentScenario: string;
-  endingText: string[];
   guideText: string[];
   /**
    * 当前是否打开物品检视弹框
@@ -37,7 +36,6 @@ export const uiState = createModel<RootModel>()({
       },
     ],
     guideText: [],
-    endingText: [],
     inventoryOpen: false,
     itemToInspect: undefined,
   } as IUIState,
@@ -48,10 +46,6 @@ export const uiState = createModel<RootModel>()({
     },
     currentBookCommentSetter(state, currentBookComment: string) {
       state.currentBookComment = currentBookComment;
-      return state;
-    },
-    endingTextSetter(state, endingText: string[]) {
-      state.endingText = endingText;
       return state;
     },
     inspectItem(state, itemID: string) {

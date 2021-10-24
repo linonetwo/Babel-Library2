@@ -1,4 +1,4 @@
-
+@import "~@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 .app {
   width: 375px;
 }

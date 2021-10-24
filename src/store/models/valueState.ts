@@ -214,7 +214,7 @@ export const valueState = createModel<RootModel>()({
 
       return realValue;
     },
-    selectGameEnding(payload: IBookTextUpdateGameScoreMetadata, rootState) {
+    selectGameEnding(payload, rootState) {
       let currentEnding: IEnding | undefined;
       rootState.valueState.endingDefinitions.forEach((ending) => {
         const scoreKeys = Object.keys(ending.condition);

@@ -7,7 +7,7 @@ import 'nes.css/css/nes.min.css';
 import ReadingPage from './pages/reading';
 import ChoicePage from './pages/choice';
 import { Home } from './pages/home/Home';
-import { Guide } from './pages/guide/Guide';
+import { End, Guide } from './pages/guide/Guide';
 import { Main } from './pages/main/Main';
 
 import { ItemInspectDialog } from 'src/components/dialog';
@@ -32,6 +32,9 @@ function App(): JSX.Element {
           </Route>
           <Route path="/guide" exact>
             <Guide />
+          </Route>
+          <Route path="/ending" exact>
+            <End />
           </Route>
           <Route path="/reading" exact>
             <ReadingPage />

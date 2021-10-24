@@ -42,14 +42,8 @@ export default function DetailedReading(): JSX.Element {
     if (page < content.length - 1) {
       setPage(page + 1);
     } else {
-      // end reading
-      // 判断是不是已经读够了
-      if (currentDetailedReadRound >= detailedReadRound) {
-        // 是的话就进入结束界面
-      } else {
-        // 否则就继续读，先展示当前阅读结论
-        detailedReadEndSetter(true);
-      }
+      // 先展示当前阅读结论
+      detailedReadEndSetter(true);
     }
   }, [currentDetailedReadRound, detailedReadRound, page, setPage, detailedReadEndSetter]);
   const readEndText = content
@@ -75,9 +69,18 @@ export default function DetailedReading(): JSX.Element {
             <Article
               content={{ value: readEndText, metadata: [] }}
               nextPage={() => {
-                // 跳回略读界面
-                dispatch.bookState.updateCurrentDetailedReadRound(currentDetailedReadRound + 1);
-                history.replace('/main');
+                // end reading
+                // 判断是不是已经读够了
+                if (currentDetailedReadRound >= detailedReadRound) {
+                  // 是的话就进入结束界面
+                  dispatch.valueState.selectGameEnding({});
+                  history.replace('/ending');
+                } else {
+                  // 否则就继续读，
+                  dispatch.bookState.updateCurrentDetailedReadRound(currentDetailedReadRound + 1);
+                  // 跳回略读界面
+                  history.replace('/main');
+                }
               }}
             />
           )}
