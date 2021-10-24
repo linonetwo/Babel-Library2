@@ -28,6 +28,7 @@ const ScrollBox = styled.section`
   &::-webkit-scrollbar {
     width: 0;
   }
+  margin-bottom: 200px;
 `;
 
 interface MessageBoxProps {
