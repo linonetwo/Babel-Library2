@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Panel from '../../components/panel';
 import { SkimThroughReadChat } from './chat';
-import StuffBar from './stuff';
+import StuffBar from '../../components/stuff';
 
 const Container = styled.div`
   display: flex;

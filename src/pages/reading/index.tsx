@@ -44,6 +44,10 @@ export default () => {
     setTimeout(() => {
       dispatch.valueState.updateScore('culture', 1);
     }, 3000);
+    setTimeout(() => {
+      console.log('新道具');
+      dispatch.valueState.insertInventory('烂梗王');
+    }, 2000);
 
     // 退出 mock
     // history.replace('/main');
