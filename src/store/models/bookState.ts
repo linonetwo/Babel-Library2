@@ -38,6 +38,10 @@ interface IBookState {
    */
   detailedReadRoundConfig: [number, number];
   /**
+   * 配置每轮精读获取的数值的范围
+   */
+  newScoreRange: [number, number];
+  /**
    * 当局游戏里随机出的需要精读几轮
    */
   detailedReadRound: number;
@@ -72,6 +76,7 @@ export const bookState = createModel<RootModel>()({
     detailedReadWithScoreFrequency: 0.4,
     detailedReadWithItemFrequency: 0.2,
     detailedReadRoundConfig: [2, 5],
+    newScoreRange: [0, 4],
     detailedReadRound: 3,
     currentDetailedReadRound: 0,
     currentSkimThroughReadContent: [],
@@ -205,7 +210,8 @@ export const bookState = createModel<RootModel>()({
           const haveItem = rootState.bookState.detailedReadWithItemFrequency > random(0, 1, true);
           let metadataItem: IBookTextMetadata | undefined;
           if (haveScore && randomScoreID !== undefined) {
-            const randomScoreValue = random(0, 3);
+            const [min, max] = rootState.bookState.newScoreRange;
+            const randomScoreValue = random(min, max);
             metadataItem = {
               ...metadataItem,
               score: randomScoreID,

@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
-import { IBookTextMetadata } from 'src/store/models/bookState';
-import { IOutputWIthMetadata } from 'tbg';
+import type { IOutputWIthMetadata } from 'tbg';
+import type { IBookTextMetadata, IBookTextNewItemMetadata, IBookTextUpdateGameScoreMetadata } from 'src/store/models/bookState';
+import { Dispatch } from 'src/store/store';
 
 const Article = styled.div`
   display: flex;
@@ -13,13 +15,29 @@ const Article = styled.div`
 `;
 
 interface ArticleProps {
-  content: any;
+  content: IOutputWIthMetadata<IBookTextMetadata[]>;
   nextPage: () => void;
 }
 
 export default ({ content, nextPage }: ArticleProps) => {
+  const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    // 更新积分
+    const scoreUpdatePayload = content.metadata?.[0];
+    // DEBUG: console
+    console.log(`scoreUpdatePayload`, scoreUpdatePayload);
+    if (scoreUpdatePayload !== undefined) {
+      const { score, scoreDiff } = scoreUpdatePayload as IBookTextUpdateGameScoreMetadata;
+      if (score && scoreDiff) {
+        const realValue = dispatch.valueState.checkItemAffectValues({ score, scoreDiff });
+        // DEBUG: console
+        console.log(`realValue`, realValue);
+        dispatch.valueState.updateScore(realValue.score, realValue.scoreDiff);
+      }
+      const { item } = scoreUpdatePayload as IBookTextNewItemMetadata;
+      if (item) {
+        dispatch.valueState.insertInventory(item);
+      }
+    }
   }, [content]);
   return (
     <Article className="nes-container is-dark is-rounded" onClick={nextPage}>
