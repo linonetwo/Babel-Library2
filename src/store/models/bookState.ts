@@ -187,20 +187,17 @@ export const bookState = createModel<RootModel>()({
       let newErrorMessage = '';
       try {
         const templateData = templateFileToNLCSTNodes(vFile);
-        console.log('templateData', templateData);
         // TODO: 暂时没用上模板槽位
         const configFormData = {};
         if (configFormData === undefined) {
           throw new Error('模板参数不正确');
         }
 
-        console.log(configFormData);
         const result: Array<IOutputWIthMetadata<unknown[]>> = randomOutlineToArrayWithMetadataCompiler(templateData, configFormData);
         // 为文本带上随机的数值内容
         const scoreIDs = Object.keys(rootState.valueState.scores);
         const itemIDs = Object.keys(rootState.valueState.itemDefinitions);
         const resultWithRandomMetadata: Array<IOutputWIthMetadata<IBookTextMetadata[]>> = result.map((aResult) => {
-          console.log('aResult', aResult);
           // 每行文本都随机抽取一下
           const randomScoreID = sample(scoreIDs);
           const randomItemID = sample(itemIDs);

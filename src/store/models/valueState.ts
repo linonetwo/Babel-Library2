@@ -101,9 +101,9 @@ interface IValueState {
 export const valueState = createModel<RootModel>()({
   state: {
     scores: {
-      resource: 0,
-      menace: 0,
-      culture: 0,
+      资源: 0,
+      威胁: 0,
+      道德: 0,
     },
     inventory: [],
     activatedInventory: [],
