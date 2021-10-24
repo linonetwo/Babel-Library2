@@ -31,7 +31,7 @@ export default ({ content, nextPage }: ArticleProps) => {
         }
         const { item } = updatePayload as IBookTextNewItemMetadata;
         if (item) {
-          dispatch.valueState.insertInventory(item);
+          dispatch.valueState.insertUpdateInventory(item);
         }
       }
     })

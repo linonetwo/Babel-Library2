@@ -227,7 +227,6 @@ export const bookState = createModel<RootModel>()({
             metadata: metadataItem !== undefined ? [metadataItem] : undefined,
           };
         });
-        console.log('resultWithRandomMetadata', resultWithRandomMetadata);
         dispatch.bookState.updateDetailedReadingContent(resultWithRandomMetadata);
       } catch (error) {
         newErrorMessage += (error as Error).message;

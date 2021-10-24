@@ -4,6 +4,7 @@ import type { RootModel } from './index';
 
 interface IUIState {
   currentBookComment: string;
+  currentItemComment: string;
   /**
    * 当前在玩的背景故事
    */
@@ -27,6 +28,7 @@ export const uiState = createModel<RootModel>()({
   state: {
     currentScenario: 'alien',
     currentBookComment: '',
+    currentItemComment: '',
     scenarios: [
       {
         name: '评价地球文明的外星人',
@@ -46,6 +48,10 @@ export const uiState = createModel<RootModel>()({
     },
     currentBookCommentSetter(state, currentBookComment: string) {
       state.currentBookComment = currentBookComment;
+      return state;
+    },
+    currentItemCommentSetter(state, currentItemComment: string) {
+      state.currentItemComment = currentItemComment;
       return state;
     },
     inspectItem(state, itemID: string) {

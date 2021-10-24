@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch, RootState } from 'src/store/store';
 import { ScorePanel } from '../../components/score';
 import Article from './article';
+import { InventoryBar } from 'src/components/inventory';
 
 const Container = styled.div`
   display: flex;
@@ -29,6 +30,7 @@ export default function DetailedReading(): JSX.Element {
   const history = useHistory();
   const content = useSelector((state: RootState) => state.bookState.currentDetailedReadContent);
   const bookComments = useSelector((state: RootState) => state.uiState.currentBookComment);
+  const itemComments = useSelector((state: RootState) => state.uiState.currentItemComment);
   const detailedReadRound = useSelector((state: RootState) => state.bookState.detailedReadRound);
   const currentDetailedReadRound = useSelector((state: RootState) => state.bookState.currentDetailedReadRound);
   const dispatch = useDispatch<Dispatch>();
@@ -40,6 +42,7 @@ export default function DetailedReading(): JSX.Element {
   }, [content]);
 
   const onNextPage = useCallback((): void => {
+    dispatch.uiState.currentItemCommentSetter('');
     if (page < content.length - 1) {
       setPage(page + 1);
     } else {
@@ -89,6 +92,8 @@ export default function DetailedReading(): JSX.Element {
       ) : (
         <Content>{content[page] !== undefined && <Article content={content[page]} nextPage={onNextPage} />}</Content>
       )}
+      <div>{itemComments}</div>
+      <InventoryBar />
     </Container>
   );
 }

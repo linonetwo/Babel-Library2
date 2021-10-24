@@ -122,7 +122,11 @@ export const valueState = createModel<RootModel>()({
       return state;
     },
     clearScore(state) {
-      state.scores = {};
+      state.scores = {
+        资源: 0,
+        威胁: 0,
+        道德: 0,
+      };
       return state;
     },
     /**
@@ -231,6 +235,13 @@ export const valueState = createModel<RootModel>()({
           description: '奇怪的是，在你下定决心的那一瞬间，图书馆层层剥落并崩塌了，仿佛这个世界的基石出了bug。',
           condition: {},
         });
+      }
+    },
+    insertUpdateInventory(itemName: string, rootState) {
+      const itemDefinition = rootState.valueState.itemDefinitions[itemName];
+      if (itemDefinition !== undefined) {
+        dispatch.uiState.currentItemCommentSetter(itemDefinition.comment);
+        dispatch.valueState.insertInventory(itemName);
       }
     },
   }),
