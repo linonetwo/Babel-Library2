@@ -31,33 +31,44 @@ export default () => {
   const history = useHistory();
   const currentTemplate = useSelector((state: RootState) => state.bookState.currentDetailedReadTemplate);
   const content = useSelector((state: RootState) => state.bookState.currentDetailedReadContent);
-  const [currentDetailedRead, currentDetailedReadSetter] = useState<string[]>([]);
-  console.log('currentTemplate', currentTemplate);
-  console.log('content', content);
+
+  const [page, setPage] = useState(0);
 
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    setTimeout(() => {
-      dispatch.valueState.updateScore('resource', 1);
-    }, 1000);
-    setTimeout(() => {
-      dispatch.valueState.updateScore('menace', 1);
-    }, 2000);
-    setTimeout(() => {
-      dispatch.valueState.updateScore('culture', 1);
-    }, 3000);
-    setTimeout(() => {
-      console.log('新道具');
-      dispatch.valueState.insertInventory('烂梗王');
-    }, 2000);
-
+    // setTimeout(() => {
+    //   dispatch.valueState.updateScore('resource', 1);
+    // }, 1000);
+    // setTimeout(() => {
+    //   dispatch.valueState.updateScore('menace', 1);
+    // }, 2000);
+    // setTimeout(() => {
+    //   dispatch.valueState.updateScore('culture', 1);
+    // }, 3000);
+    // setTimeout(() => {
+    //   console.log('新道具');
+    //   dispatch.valueState.insertInventory('烂梗王');
+    // }, 2000);
     // 退出 mock
     // history.replace('/main');
   }, []);
 
+  useEffect(() => {
+    setPage(0);
+  }, [content]);
+
   const [active, setActive] = useState(false);
   const onClose = () => {
     setActive(!active);
+  };
+
+  const onNextPage = () => {
+    if (page < content.length - 1) {
+      setPage(page + 1);
+    } else {
+      // end reading
+      history.replace('/main');
+    }
   };
   return (
     <Container>
@@ -67,9 +78,7 @@ export default () => {
         <Material />
       </Dialog>
       <Content>
-        {content.map((item) => (
-          <Article content={item.value} />
-        ))}
+        <Article content={content[page]} nextPage={onNextPage} />
       </Content>
     </Container>
   );
