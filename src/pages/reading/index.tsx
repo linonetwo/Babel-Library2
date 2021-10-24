@@ -28,6 +28,7 @@ const Content = styled.div`
 export default function DetailedReading(): JSX.Element {
   const history = useHistory();
   const content = useSelector((state: RootState) => state.bookState.currentDetailedReadContent);
+  const bookComments = useSelector((state: RootState) => state.uiState.currentBookComment);
   const detailedReadRound = useSelector((state: RootState) => state.bookState.detailedReadRound);
   const currentDetailedReadRound = useSelector((state: RootState) => state.bookState.currentDetailedReadRound);
   const dispatch = useDispatch<Dispatch>();
@@ -49,7 +50,7 @@ export default function DetailedReading(): JSX.Element {
   const readEndText = content
     .flatMap((line) =>
       (line.metadata ?? []).map((metadata) => {
-        let text = '';
+        let text = bookComments;
         if ('item' in metadata) {
           text += `获得了「${metadata.item}」。`;
         }

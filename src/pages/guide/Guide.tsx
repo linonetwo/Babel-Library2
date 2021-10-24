@@ -71,6 +71,11 @@ export function Guide(): JSX.Element {
     dispatch.valueState.loadItemDefinitions({});
     dispatch.bookState.updateDetailedReadRound();
     dispatch.valueState.loadEndingDefinitions({});
+    dispatch.valueState.clearScore();
+    dispatch.valueState.clearInventory();
+    dispatch.valueState.setActivatedInventory([]);
+    dispatch.uiState.closeInventoryInspectDialog();
+    dispatch.uiState.currentBookCommentSetter('');
   }, []);
   return <GuiderText guideText={guideText} linkTo="/main" />;
 }
