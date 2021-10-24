@@ -49,6 +49,7 @@ export function Guide(): JSX.Element {
   useEffect(() => {
     dispatch.uiState.loadGuideText({});
     dispatch.valueState.loadItemDefinitions({});
+    dispatch.bookState.updateDetailedReadRound();
   }, []);
   return (
     <Container className="nes-container">

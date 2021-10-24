@@ -22,22 +22,19 @@ interface ArticleProps {
 export default ({ content, nextPage }: ArticleProps) => {
   const dispatch = useDispatch<Dispatch>();
   useEffect(() => {
-    const scoreUpdatePayload = content.metadata?.[0];
-    // DEBUG: console
-    console.log(`scoreUpdatePayload`, scoreUpdatePayload);
-    if (scoreUpdatePayload !== undefined) {
-      const { score, scoreDiff } = scoreUpdatePayload as IBookTextUpdateGameScoreMetadata;
-      if (score && scoreDiff) {
-        const realValue = dispatch.valueState.checkItemAffectValues({ score, scoreDiff });
-        // DEBUG: console
-        console.log(`realValue`, realValue);
-        dispatch.valueState.updateScore(realValue.score, realValue.scoreDiff);
+    content.metadata?.forEach?.((updatePayload) => {
+      if (updatePayload !== undefined) {
+        const { score, scoreDiff } = updatePayload as IBookTextUpdateGameScoreMetadata;
+        if (score && scoreDiff) {
+          const realValue = dispatch.valueState.checkItemAffectValues({ score, scoreDiff });
+          dispatch.valueState.updateScore(realValue.score, realValue.scoreDiff);
+        }
+        const { item } = updatePayload as IBookTextNewItemMetadata;
+        if (item) {
+          dispatch.valueState.insertInventory(item);
+        }
       }
-      const { item } = scoreUpdatePayload as IBookTextNewItemMetadata;
-      if (item) {
-        dispatch.valueState.insertInventory(item);
-      }
-    }
+    })
   }, [content]);
   return (
     <Article className="nes-container is-dark is-rounded" onClick={nextPage}>

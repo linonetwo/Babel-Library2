@@ -29,24 +29,24 @@ const Text = styled.span`
   font-size: 20px;
 `;
 
-const ResProgress = styled.progress`
+const ResultProgress = styled.progress`
   height: 18px;
   margin: 0;
 `;
 
-interface ResCellProps {
+interface ResultCellProps {
   name: string;
   value: number;
 }
 
-export default ({ name, value = 0 }: ResCellProps) => {
+export default function functionResultCell({ name, value = 0 }: ResultCellProps): JSX.Element {
   return (
     <ResCell>
       <Row>
         <Icon />
         <Text>{name}</Text>
       </Row>
-      <ResProgress className="nes-progress" value={value} max="10"></ResProgress>
+      <ResultProgress className="nes-progress" value={value} max="10"></ResultProgress>
     </ResCell>
   );
-};
+}
