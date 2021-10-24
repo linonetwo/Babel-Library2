@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+
+import { IBookTextMetadata } from 'src/store/models/bookState';
+import { IOutputWIthMetadata } from 'tbg';
 
 const Article = styled.div`
   display: flex;
@@ -9,11 +12,18 @@ const Article = styled.div`
   margin: 0 auto;
 `;
 
-export default () => {
+interface ArticleProps {
+  content: any;
+  nextPage: () => void;
+}
+
+export default ({ content, nextPage }: ArticleProps) => {
+  useEffect(() => {
+    // 更新积分
+  }, [content]);
   return (
-    <Article className="nes-container is-dark is-rounded">
-      <p className="title">小标题</p>
-      <p>小说是文学的一种样式，一般描写人物故事，塑造多种多样的人物形象，但亦有例外。 Good morning. Thou hast had a good night's sleep, I hope.</p>
+    <Article className="nes-container is-dark is-rounded" onClick={nextPage}>
+      <p>{content.value}</p>
     </Article>
   );
 };
