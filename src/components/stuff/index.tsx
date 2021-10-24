@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dispatch, RootState } from 'src/store/store';
 
 const Container = styled.div`
   display: flex;
@@ -29,11 +31,11 @@ const Item = styled.img`
 
 export default () => {
   let history = useHistory();
-  const handleClick = () => {
-    history.push('/guide');
-  };
+  const inventory = useSelector((state: RootState) => state.valueState.inventory);
+
+  console.log('inventory', inventory);
   return (
-    <Container onClick={handleClick}>
+    <Container>
       <Cell>
         <Item />
       </Cell>
