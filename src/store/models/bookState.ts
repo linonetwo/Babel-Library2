@@ -71,7 +71,7 @@ interface IBookState {
  */
 export const bookState = createModel<RootModel>()({
   state: {
-    skimThroughReadCountRange: [1, 2],
+    skimThroughReadCountRange: [10, 20],
     skimThroughReadInterval: 2000,
     detailedReadWithScoreFrequency: 0.6,
     detailedReadWithItemFrequency: 0.3,
