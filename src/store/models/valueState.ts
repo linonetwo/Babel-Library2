@@ -220,6 +220,7 @@ export const valueState = createModel<RootModel>()({
     },
     selectGameEnding(payload, rootState) {
       let currentEnding: IEnding | undefined;
+      console.info(rootState.valueState.scores);
       rootState.valueState.endingDefinitions.forEach((ending) => {
         const scoreKeys = Object.keys(ending.condition);
         if (scoreKeys.every((key) => (rootState.valueState.scores[key] ?? 0) > ending.condition[key])) {
