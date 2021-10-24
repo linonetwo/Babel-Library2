@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://onetwo.ren/Babel-Library2/static/css/main.30e7f725.chunk.css",
-    "main.js": "https://onetwo.ren/Babel-Library2/static/js/main.8c790061.chunk.js",
-    "main.js.map": "https://onetwo.ren/Babel-Library2/static/js/main.8c790061.chunk.js.map",
+    "main.js": "https://onetwo.ren/Babel-Library2/static/js/main.50127f14.chunk.js",
+    "main.js.map": "https://onetwo.ren/Babel-Library2/static/js/main.50127f14.chunk.js.map",
     "runtime-main.js": "https://onetwo.ren/Babel-Library2/static/js/runtime-main.ac582cbb.js",
     "runtime-main.js.map": "https://onetwo.ren/Babel-Library2/static/js/runtime-main.ac582cbb.js.map",
     "static/css/2.6bba57c7.chunk.css": "https://onetwo.ren/Babel-Library2/static/css/2.6bba57c7.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.6bba57c7.chunk.css",
     "static/js/2.63d4bcb0.chunk.js",
     "static/css/main.30e7f725.chunk.css",
-    "static/js/main.8c790061.chunk.js"
+    "static/js/main.50127f14.chunk.js"
   ]
 }
