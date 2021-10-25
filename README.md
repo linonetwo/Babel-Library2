@@ -4,6 +4,8 @@
 
 为什么叫《巴别塔图书馆 2》？主要是致敬博尔赫斯所作的《巴别塔图书馆》，同时保持搜索引擎优化不产生搜索歧义。
 
+文本自动生成能力来自：模生模项目 https://github.com/linonetwo/template-based-generator-template
+
 ## 需求目标
 
 [详细需求文档（飞书文档）](https://bytedance.feishu.cn/docs/doccn0tJ9KyZybGRhb4eWcYsmHh?from=from_copylink)，以 ← 为准，逐步更新到 README 中。
